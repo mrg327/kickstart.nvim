@@ -963,3 +963,25 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+--
+-- Create a view after every save
+vim.api.nvim_create_autocmd('BufWritePost', {
+  pattern = '*',
+  command = 'mkview',
+})
+
+-- Automatically load view when entering a buffer
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  pattern = '*',
+  command = 'silent! loadview',
+})
+
+-- Restore cursor position if applicable
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = '*',
+  callback = function()
+    if vim.bo.filetype ~= 'commit' and vim.fn.line '\'"' > 1 and vim.fn.line '\'"' <= vim.fn.line '$' then
+      vim.cmd 'normal! g`"zv'
+    end
+  end,
+})
