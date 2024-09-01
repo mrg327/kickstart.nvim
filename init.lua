@@ -170,7 +170,7 @@ vim.opt.scrolloff = 10
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Diagnostic keymaps
+-- Diagnostic keymapskeymap
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -417,6 +417,13 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+      -- Git Telescpe Pickers
+      vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = 'Find existing [G]it [B]ranches' })
+      vim.keymap.set('n', '<leader>gst', builtin.git_status, { desc = 'Find existing [G]it [S][t]atus' })
+      vim.keymap.set('n', '<leader>gsh', builtin.git_stash, { desc = 'Find existing [G]it [S]tas[h]' })
+      vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Find existing [G]it [F]iles' })
+      vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = 'Find existing [G]it [C]ommits' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -964,6 +971,8 @@ require('lazy').setup({
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 --
+-- NOTE: Auto commands to make/save views and restore cursor postion after save
+--
 -- Create a view after every save
 vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = '*',
@@ -985,3 +994,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end
   end,
 })
+
+-- Traditional Save
+vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
