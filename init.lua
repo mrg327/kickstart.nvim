@@ -171,7 +171,10 @@ vim.opt.scrolloff = 10
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymapskeymap
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>qi', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix [I]ssue list' })
+
+-- List TODOs in quickfix
+vim.keymap.set('n', '<leader>qt', '<cmd>:TODOQUICKFIX<CR>', { desc = 'Open diagnostic [Q]uickfix [T]ODO list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -622,15 +625,25 @@ require('lazy').setup({
     local servers = {
       -- clangd = {},
       -- gopls = {},
-      pyright = {},
+      pyright = {
+        settings = {
+          python = {
+            pythonPath = 'C:/Users/DVUHPQU/.venv/Scripts/python.exe'
+          }
+        }
+      },
       cucumber_language_server = {settings = {
         cucumber = {
-          stepDefinitions = {"**/steps/**/*.py",
-                             "**/tests/step_defs/**/*.py",
-                             "**/tests/**/*.py",
-                             "tests/**/*.py",
-                             "**/tests/step_defs/*.py",
-                           }
+          features = { 
+            "**/features/**/*.feature"  -- Add your feature file patterns here
+            },
+          glue = {
+            "**/steps/**/*.py",
+            "**/tests/step_defs/**/*.py",
+            "**/tests/**/*.py",
+            "tests/**/*.py",
+            "**/tests/step_defs/*.py",
+             },
           }
         },
         },
@@ -728,7 +741,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = {'ast-grep','stylua', stop_after_first = true},
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { "ruff" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -756,12 +769,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -773,6 +786,9 @@ require('lazy').setup({
       'hrsh7th/cmp-path',
     },
     config = function()
+      -- Require custiom snippets
+      require("snippets")
+
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
@@ -910,6 +926,7 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
+
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
@@ -944,12 +961,12 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -1008,3 +1025,4 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 -- Traditional Save
 vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
+
