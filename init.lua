@@ -997,3 +997,8 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 -- Traditional Save
 vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
+
+-- Print the current date to the screen
+vim.keymap.set('n', '<leader>pd', function()
+  vim.api.nvim_put({ os.date '%m-%d-%y' }, 'c', true, true)
+end, { desc = 'Insert current date in mm-dd-yy format' })
