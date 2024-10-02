@@ -11,26 +11,29 @@ ls.add_snippets('python', {
     
     Argument(s)
     -----------
-    {} -- {}
+    {}: {} -- {}
 
     Returns
     -----------
-    {} -- {}
+    {}: {} -- {}
     '''
   ]], {
-    i(1, 'Description'),       -- Placeholder for the description
-    i(2, 'argument1'),         -- Placeholder for the argument name
-    i(3, 'description1'),      -- Placeholder for the argument description
-    i(4, 'return1'),           -- Placeholder for the return value
-    i(5, 'ret_description1')   -- Placeholder for the return description
+    i(1, 'Definition'),        -- Placeholder for the description
+    i(2, 'Argument'),          -- Placeholder for the argument name
+    i(3, 'Argument Type'),     -- Placeholder for the argument name
+    i(4, 'Description'),       -- Placeholder for the argument description
+    i(5, 'Return'),            -- Placeholder for the return value
+    i(6, 'Return Type'),       -- Placeholder for the return value
+    i(7, 'Return Description') -- Placeholder for the return description
   }))
 })
 
 ls.add_snippets('python', {
   s('dpara', fmt([[
-{} -- {}
+{}: {} -- {}
   ]],{
-    i(1, 'param'),
-    i(2, 'description')
+    i(1, 'Param'),
+    i(2, 'Param Type'),
+    i(3, 'Param Description')
   }))
 })
