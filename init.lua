@@ -734,14 +734,14 @@ require('lazy').setup({
           lsp_format_opt = 'fallback'
         end
         return {
-          timeout_ms = 1000,
+          timeout_ms = 3000,
           lsp_format = lsp_format_opt,
         }
       end,
       formatters_by_ft = {
         lua = {'ast-grep','stylua', stop_after_first = true},
         -- Conform can also run multiple formatters sequentially
-        python = { "ruff" },
+        python = { "ruff", "black", stop_after_first = true},
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
