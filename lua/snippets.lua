@@ -6,7 +6,7 @@ local i = ls.insert_node
 -- Define a snippet for a Python docstring template using fmt
 ls.add_snippets('python', {
   s('docstr', fmt([[
-    '''
+    """
     {}
     
     Argument(s)
@@ -16,7 +16,7 @@ ls.add_snippets('python', {
     Returns
     -----------
     {}: {} -- {}
-    '''
+    """
   ]], {
     i(1, 'Definition'),        -- Placeholder for the description
     i(2, 'Argument'),          -- Placeholder for the argument name
