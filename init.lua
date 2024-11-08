@@ -624,6 +624,7 @@ require('lazy').setup(
           -- clangd = {},
           -- gopls = {},
           pyright = {
+            cmd = { "C:/Users/DVUHPQU/AppData/Roaming/npm/pyright-langserver", "--stdio" },
             settings = {
               python = {
                 pythonPath = 'C:/Users/DVUHPQU/.venv/Scripts/python.exe',
@@ -1030,3 +1031,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 -- Traditional Save
 vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
+
+-- Change Working Directory to Current File
+vim.keymap.set('n', '<leader>cd', function () vim.cmd('cd %:p:h') end, { desc = "[C]hange Working [D]irectory to Active Buffer" })
