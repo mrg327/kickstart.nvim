@@ -9,13 +9,11 @@ ls.add_snippets('python', {
     """
     {}
     
-    Argument(s)
-    -----------
-    {}: {} -- {}
+    Args:
+        {} ({}): {}
 
-    Returns
-    -----------
-    {}: {} -- {}
+    Returns:
+        {} ({}): {}
     """
   ]], {
     i(1, 'Definition'),        -- Placeholder for the description
@@ -30,7 +28,7 @@ ls.add_snippets('python', {
 
 ls.add_snippets('python', {
   s('dpara', fmt([[
-{}: {} -- {}
+  {} ({}): {}
   ]],{
     i(1, 'Param'),
     i(2, 'Param Type'),
