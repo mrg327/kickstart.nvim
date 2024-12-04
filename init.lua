@@ -429,7 +429,7 @@ require('lazy').setup(
         vim.keymap.set('n', '<leader>gst', builtin.git_status, { desc = 'Find existing [G]it [S][t]atus' })
         vim.keymap.set('n', '<leader>gsh', builtin.git_stash, { desc = 'Find existing [G]it [S]tas[h]' })
         vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Find existing [G]it [F]iles' })
-        vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = 'Find existing [G]it [C]ommits' })
+        vim.keymap.set('n', '<leader>glc', builtin.git_commits, { desc = 'Find existing [G]it [L]ist [C]ommits' })
 
         -- Slightly advanced example of overriding default behavior and theme
         vim.keymap.set('n', '<leader>/', function()
@@ -917,6 +917,17 @@ require('lazy').setup(
 
         -- Use MiniGit for git related actions
         require('mini.git').setup()
+        -- Set custom keymaps for git actions
+        -- - gp   - [G]it [A]dd [U]pdates
+        vim.keymap.set('n', '<leader>gau', function () vim.cmd('Git add -u') end, { desc = "[G]it [A]dd [U]pdates" })
+        -- - gp   - [G]it [C]ommit
+        vim.keymap.set('n', '<leader>gc', function () vim.cmd('Git commit') end, { desc = "[G]it [C]ommit" })
+        -- - gp   - [G]it [P]ull
+        vim.keymap.set('n', '<leader>gp', function () vim.cmd('Git pull') end, { desc = "[G]it [P]ull" })
+        -- - gpsh - [G]it [P]ush
+        vim.keymap.set('n', '<leader>gpsh', function () vim.cmd('Git push') end, { desc = "[G]it [P]ush" })
+        -- - gs   - [G]it [S]tatus
+        vim.keymap.set('n', '<leader>gs', function () vim.cmd('Git status') end, { desc = "[G]it [S]tatus" })
 
         -- Simple and easy statusline.
         --  You could remove this setup call if you don't like it,
