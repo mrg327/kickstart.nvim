@@ -915,6 +915,9 @@ require('lazy').setup(
         -- - sr)'  - [S]urround [R]eplace [)] [']
         require('mini.surround').setup()
 
+        -- Add mini pairs for autopairing of (), [], {}, '', '', <>
+        require('mini.pairs').setup()
+
         -- Use MiniGit for git related actions
         require('mini.git').setup()
         -- Set custom keymaps for git actions
@@ -1046,8 +1049,18 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
+
+-- Quality of life improvements (Added by Matthew)
 -- Traditional Save
 vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
 
 -- Change Working Directory to Current File
 vim.keymap.set('n', '<leader>cd', function () vim.cmd('cd %:p:h') end, { desc = "[C]hange Working [D]irectory to Active Buffer" })
+
+-- Create a new term when pressing F6
+vim.keymap.set('n','<F6>', function () vim.cmd('term') end, {desc = "Create a term"})
+
+-- Create a new tab when pressing F7
+vim.keymap.set('n','<F7>', function () vim.cmd('tabnew') end, {desc = "Create a tab"})
+-- Close a tab when pressing Shift + F7
+vim.keymap.set('n','<S-F7>', function () vim.cmd('tabclose') end, {desc = "Close a tab"})
