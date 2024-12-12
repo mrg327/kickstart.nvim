@@ -173,7 +173,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymapskeymap
 vim.keymap.set('n', '<leader>qi', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix [I]ssue list' })
 
--- TODO Commants Quickfix List
+-- TODO Comments Quickfix List
 vim.keymap.set('n', '<leader>qt', function () vim.cmd('TodoQuickFix') end, { desc = 'Open diagnostic [Q]uickfix [T]odo list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -202,7 +202,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
--- Highlight when yanking (copying) text
+--  Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -1064,3 +1064,5 @@ vim.keymap.set('n','<F6>', function () vim.cmd('term') end, {desc = "Create a te
 vim.keymap.set('n','<F7>', function () vim.cmd('tabnew') end, {desc = "Create a tab"})
 -- Close a tab when pressing Shift + F7
 vim.keymap.set('n','<S-F7>', function () vim.cmd('tabclose') end, {desc = "Close a tab"})
+-- Delete a buffer when presisng Control + F7
+vim.keymap.set('n','<C-S-F7>', function () vim.cmd('bd!') end, {desc = "Delete a buffer"})
