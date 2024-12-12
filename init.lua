@@ -173,7 +173,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymapskeymap
 vim.keymap.set('n', '<leader>qi', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix [I]ssue list' })
 
--- TODO Commants Quickfix List
+-- TODO Comments Quickfix List
 vim.keymap.set('n', '<leader>qt', function()
   vim.cmd 'TodoQuickFix'
 end, { desc = 'Open diagnostic [Q]uickfix [T]odo list' })
@@ -1062,6 +1062,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 })
 
 -- Quality of life improvements (Added by Matthew)
+
 -- Traditional Save
 vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
 vim.keymap.set('i', '<C-s>', '<cmd>w<CR>')
