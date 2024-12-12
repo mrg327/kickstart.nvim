@@ -173,8 +173,10 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymapskeymap
 vim.keymap.set('n', '<leader>qi', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix [I]ssue list' })
 
--- TODO Comments Quickfix List
-vim.keymap.set('n', '<leader>qt', function () vim.cmd('TodoQuickFix') end, { desc = 'Open diagnostic [Q]uickfix [T]odo list' })
+-- TODO Commants Quickfix List
+vim.keymap.set('n', '<leader>qt', function()
+  vim.cmd 'TodoQuickFix'
+end, { desc = 'Open diagnostic [Q]uickfix [T]odo list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -627,7 +629,7 @@ require('lazy').setup(
           -- clangd = {},
           -- gopls = {},
           pyright = {
-            cmd = { "C:/Users/DVUHPQU/AppData/Roaming/npm/pyright-langserver", "--stdio" },
+            cmd = { 'C:/Users/DVUHPQU/AppData/Roaming/npm/pyright-langserver', '--stdio' },
             settings = {
               python = {
                 pythonPath = 'C:/Users/DVUHPQU/.venv/Scripts/python.exe',
@@ -922,15 +924,25 @@ require('lazy').setup(
         require('mini.git').setup()
         -- Set custom keymaps for git actions
         -- - gp   - [G]it [A]dd [U]pdates
-        vim.keymap.set('n', '<leader>gau', function () vim.cmd('Git add -u') end, { desc = "[G]it [A]dd [U]pdates" })
+        vim.keymap.set('n', '<leader>gau', function()
+          vim.cmd 'Git add -u'
+        end, { desc = '[G]it [A]dd [U]pdates' })
         -- - gp   - [G]it [C]ommit
-        vim.keymap.set('n', '<leader>gc', function () vim.cmd('Git commit') end, { desc = "[G]it [C]ommit" })
+        vim.keymap.set('n', '<leader>gc', function()
+          vim.cmd 'Git commit'
+        end, { desc = '[G]it [C]ommit' })
         -- - gp   - [G]it [P]ull
-        vim.keymap.set('n', '<leader>gp', function () vim.cmd('Git pull') end, { desc = "[G]it [P]ull" })
+        vim.keymap.set('n', '<leader>gp', function()
+          vim.cmd 'Git pull'
+        end, { desc = '[G]it [P]ull' })
         -- - gpsh - [G]it [P]ush
-        vim.keymap.set('n', '<leader>gpsh', function () vim.cmd('Git push') end, { desc = "[G]it [P]ush" })
+        vim.keymap.set('n', '<leader>gpsh', function()
+          vim.cmd 'Git push'
+        end, { desc = '[G]it [P]ush' })
         -- - gs   - [G]it [S]tatus
-        vim.keymap.set('n', '<leader>gs', function () vim.cmd('Git status') end, { desc = "[G]it [S]tatus" })
+        vim.keymap.set('n', '<leader>gs', function()
+          vim.cmd 'Git status'
+        end, { desc = '[G]it [S]tatus' })
 
         -- Simple and easy statusline.
         --  You could remove this setup call if you don't like it,
@@ -1049,19 +1061,25 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
-
 -- Quality of life improvements (Added by Matthew)
 -- Traditional Save
 vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
+vim.keymap.set('i', '<C-s>', '<cmd>w<CR>')
 
 -- Change Working Directory to Current File
-vim.keymap.set('n', '<leader>cd', function () vim.cmd('cd %:p:h') end, { desc = "[C]hange Working [D]irectory to Active Buffer" })
+vim.keymap.set('n', '<leader>cd', function()
+  vim.cmd 'cd %:p:h'
+end, { desc = '[C]hange Working [D]irectory to Active Buffer' })
 
 -- Create a new term when pressing F6
-vim.keymap.set('n','<F6>', function () vim.cmd('term') end, {desc = "Create a term"})
+vim.keymap.set('n', '<F6>', function()
+  vim.cmd 'term'
+end, { desc = 'Create a term' })
 
 -- Create a new tab when pressing F7
-vim.keymap.set('n','<F7>', function () vim.cmd('tabnew') end, {desc = "Create a tab"})
+vim.keymap.set('n', '<F7>', function()
+  vim.cmd 'tabnew'
+end, { desc = 'Create a tab' })
 -- Close a tab when pressing Shift + F7
 vim.keymap.set('n','<S-F7>', function () vim.cmd('tabclose') end, {desc = "Close a tab"})
 -- Delete a buffer when presisng Control + F7
