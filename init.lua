@@ -90,6 +90,9 @@ I offer only what I have to contribute to what you have started.
 - MG
 --]]
 
+-- First things first, let's import all machine-specific config
+-- local dir_import = require("dir_import") 
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
