@@ -90,8 +90,8 @@ I offer only what I have to contribute to what you have started.
 - MG
 --]]
 
--- First things first, let's import all machine-specific config
-local dir_import = require("dir_import") 
+-- Import the env config
+local env_paths = require("dir_import")
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -632,10 +632,10 @@ require('lazy').setup(
           -- clangd = {},
           -- gopls = {},
           pyright = {
-            cmd = { dir_import["pyright"], '--stdio' },
+            cmd = { env_paths["pyright"], '--stdio' },
             settings = {
               python = {
-                pythonPath = dir_import["python"],
+                pythonPath = env_paths["python"],
               },
             },
           },
