@@ -1088,3 +1088,7 @@ end, { desc = 'Create a tab' })
 vim.keymap.set('n','<S-F7>', function () vim.cmd('tabclose') end, {desc = "Close a tab"})
 -- Delete a buffer when presisng Control + F7
 vim.keymap.set('n','<C-S-F7>', function () vim.cmd('bd!') end, {desc = "Delete a buffer"})
+
+-- TODO: Future Plans for this init.vim:
+-- Modular setup of libraries and other Keymaps such that they exist compartmentalized in their own files
+-- Add keys to make debugging in Python faster. Make this generalizable for the future
