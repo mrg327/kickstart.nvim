@@ -91,7 +91,7 @@ I offer only what I have to contribute to what you have started.
 --]]
 
 -- First things first, let's import all machine-specific config
--- local dir_import = require("dir_import") 
+local dir_import = require("dir_import") 
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -632,10 +632,10 @@ require('lazy').setup(
           -- clangd = {},
           -- gopls = {},
           pyright = {
-            cmd = { 'C:/Users/DVUHPQU/AppData/Roaming/npm/pyright-langserver', '--stdio' },
+            cmd = { dir_import["pyright"], '--stdio' },
             settings = {
               python = {
-                pythonPath = 'C:/Users/DVUHPQU/.venv/Scripts/python.exe',
+                pythonPath = dir_import["python"],
               },
             },
           },
