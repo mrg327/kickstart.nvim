@@ -91,7 +91,10 @@ I offer only what I have to contribute to what you have started.
 --]]
 
 -- Import the env config
-local env_paths = require("dir_import")
+local env_paths = require 'dir_import'
+
+-- Set the default shell to powershell
+vim.o.shell = env_paths['shell']
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -632,10 +635,10 @@ require('lazy').setup(
           -- clangd = {},
           -- gopls = {},
           pyright = {
-            cmd = { env_paths["pyright"], '--stdio' },
+            cmd = { env_paths['pyright'], '--stdio' },
             settings = {
               python = {
-                pythonPath = env_paths["python"],
+                pythonPath = env_paths['python'],
               },
             },
           },
@@ -1085,9 +1088,13 @@ vim.keymap.set('n', '<F7>', function()
   vim.cmd 'tabnew'
 end, { desc = 'Create a tab' })
 -- Close a tab when pressing Shift + F7
-vim.keymap.set('n','<S-F7>', function () vim.cmd('tabclose') end, {desc = "Close a tab"})
+vim.keymap.set('n', '<S-F7>', function()
+  vim.cmd 'tabclose'
+end, { desc = 'Close a tab' })
 -- Delete a buffer when presisng Control + F7
-vim.keymap.set('n','<C-S-F7>', function () vim.cmd('bd!') end, {desc = "Delete a buffer"})
+vim.keymap.set('n', '<C-S-F7>', function()
+  vim.cmd 'bd!'
+end, { desc = 'Delete a buffer' })
 
 -- TODO: Future Plans for this init.vim:
 -- Modular setup of libraries and other Keymaps such that they exist compartmentalized in their own files
