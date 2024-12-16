@@ -7,7 +7,7 @@ git update-index --no-assume-unchanged path/to/file
 --]]
 
 
-local configs = {pyright = "C:/Users/DVUHPQU/AppData/Roaming/npm/pyright-langserver",
-                 python = "C:/Users/DVUHPQU/.venv/Scripts/python.exe"}
+local configs = {pyright = "/Users/matthewghere/npm/pyright-langserver",
+                 python = "/Users/matthewghere/.venv/bin/python"}
 
 return configs
