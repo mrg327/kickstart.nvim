@@ -91,6 +91,8 @@ I offer only what I have to contribute to what you have started.
 --]]
 
 -- Import the env config
+-- This contains computer-specific config dirs and 
+-- should be changed for each machine
 local env_paths = require 'dir_import'
 
 -- Set the default shell to powershell
@@ -459,7 +461,7 @@ require('lazy').setup(
 
         -- Shortcut for searching your Neovim configuration files
         vim.keymap.set('n', '<leader>sn', function()
-          builtin.find_files { cwd = vim.fn.stdpath 'config' }
+          builtin.find_files { cwd = vim.fn.stdpath 'config', debug=true }
         end, { desc = '[S]earch [N]eovim files' })
       end,
     },
@@ -1004,11 +1006,10 @@ require('lazy').setup(
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
-  require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.neo-tree',
+  -- require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.autopairs',
+  -- require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -1066,6 +1067,8 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end
   end,
 })
+
+local debug = require 'kickstart.plugins.debug'
 
 -- Quality of life improvements (Added by Matthew)
 
