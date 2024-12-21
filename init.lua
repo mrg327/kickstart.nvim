@@ -757,7 +757,7 @@ require('lazy').setup(
         formatters_by_ft = {
           lua = { 'ast-grep', 'stylua', stop_after_first = true },
           -- Conform can also run multiple formatters sequentially
-          python = { 'ruff', 'black', stop_after_first = false },
+          python = { 'black', 'ruff', stop_after_first = true },
           --
           -- You can use 'stop_after_first' to run the first available formatter from the list
           -- javascript = { "prettierd", "prettier", stop_after_first = true },
