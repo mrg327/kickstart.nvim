@@ -96,7 +96,9 @@ I offer only what I have to contribute to what you have started.
 local env_paths = require 'dir_import'
 
 -- Set the default shell to powershell
-vim.o.shell = env_paths['shell']
+if env_paths["shell"] then
+  vim.o.shell = env_paths['shell']
+end
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
