@@ -91,12 +91,12 @@ I offer only what I have to contribute to what you have started.
 --]]
 
 -- Import the env config
--- This contains computer-specific config dirs and 
+-- This contains computer-specific config dirs and
 -- should be changed for each machine
 local env_paths = require 'dir_import'
 
 -- Set the default shell to powershell
-if env_paths["shell"] then
+if env_paths['shell'] then
   vim.o.shell = env_paths['shell']
 end
 
@@ -463,7 +463,7 @@ require('lazy').setup(
 
         -- Shortcut for searching your Neovim configuration files
         vim.keymap.set('n', '<leader>sn', function()
-          builtin.find_files { cwd = vim.fn.stdpath 'config', debug=true }
+          builtin.find_files { cwd = vim.fn.stdpath 'config', debug = true }
         end, { desc = '[S]earch [N]eovim files' })
       end,
     },
@@ -763,6 +763,7 @@ require('lazy').setup(
           -- Conform can also run multiple formatters sequentially
           python = { 'black', 'ruff', stop_after_first = true },
           --
+          markdown = { 'mdformat', 'markdownlint', stop_after_first = true },
           -- You can use 'stop_after_first' to run the first available formatter from the list
           -- javascript = { "prettierd", "prettier", stop_after_first = true },
         },
