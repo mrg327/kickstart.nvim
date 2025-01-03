@@ -685,7 +685,7 @@ require('lazy').setup(
                   '${3rd}/love2d/library',
                 },
                 -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                -- diagnostics = { disable = { 'missing-fields' } },
+                diagnostics = { disable = { 'missing-fields' } },
               },
             },
           },
@@ -757,7 +757,7 @@ require('lazy').setup(
         formatters_by_ft = {
           lua = { 'ast-grep', 'stylua', stop_after_first = true },
           -- Conform can also run multiple formatters sequentially
-          python = { 'ruff', 'black', stop_after_first = false },
+          python = { 'ruff', 'black',},
           --
           -- You can use 'stop_after_first' to run the first available formatter from the list
           -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -1038,7 +1038,7 @@ require('lazy').setup(
       },
     },
   }
-)
+  )
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
