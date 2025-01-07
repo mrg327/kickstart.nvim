@@ -278,6 +278,9 @@ require('lazy').setup(
       },
     },
 
+  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+  { import = 'kickstart.plugins.debug' },
+
     -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
     --
     -- This is often very useful to both group configuration, as well as handle
@@ -463,7 +466,7 @@ require('lazy').setup(
 
         -- Shortcut for searching your Neovim configuration files
         vim.keymap.set('n', '<leader>sn', function()
-          builtin.find_files { cwd = vim.fn.stdpath 'config', debug = true }
+          builtin.find_files { cwd = vim.fn.stdpath('config'), debug = true }
         end, { desc = '[S]earch [N]eovim files' })
       end,
     },
@@ -636,6 +639,7 @@ require('lazy').setup(
         --  - settings (table): Override the default settings passed when initializing the server.
         --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
         local servers = {
+          ast_grep = {},
           -- clangd = {},
           -- gopls = {},
           pyright = {
@@ -689,7 +693,7 @@ require('lazy').setup(
                   '${3rd}/love2d/library',
                 },
                 -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                -- diagnostics = { disable = { 'missing-fields' } },
+                diagnostics = { disable = { 'missing-fields' } },
               },
             },
           },
@@ -761,7 +765,7 @@ require('lazy').setup(
         formatters_by_ft = {
           lua = { 'ast-grep', 'stylua', stop_after_first = true },
           -- Conform can also run multiple formatters sequentially
-          python = { 'black', 'ruff', stop_after_first = true },
+          python = { 'black', stop_after_first = true },
           --
           markdown = { 'mdformat', 'markdownlint', stop_after_first = true },
           -- You can use 'stop_after_first' to run the first available formatter from the list
@@ -1000,6 +1004,7 @@ require('lazy').setup(
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
 
+
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
@@ -1013,14 +1018,13 @@ require('lazy').setup(
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
-  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  -- require 'kickstart.plugins.debug',
+  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
   {
     ui = {
       -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -1043,6 +1047,16 @@ require('lazy').setup(
     },
   }
 )
+
+  --  Here are some example plugins that I've included in the Kickstart repository.
+  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
+  --
+  -- require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.autopairs',
+  -- require 'kickstart.plugins.neo-tree',
+  -- require('kickstart.plugins.debug')
+  -- require('kickstart.plugins.gitsigns') -- adds gitsigns recommend keymaps
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
@@ -1071,7 +1085,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
-local debug = require 'kickstart.plugins.debug'
 
 -- Quality of life improvements (Added by Matthew)
 
