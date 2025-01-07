@@ -812,7 +812,7 @@ require('lazy').setup(
       },
       config = function()
         -- Require custiom snippets
-        require 'snippets'
+        require 'custom.snippets.snippets'
 
         -- See `:help cmp`
         local cmp = require 'cmp'
@@ -1046,7 +1046,7 @@ require('lazy').setup(
       },
     },
   }
-)
+  )
 
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
