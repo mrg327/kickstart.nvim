@@ -108,15 +108,9 @@ vim.g.maplocalleader = ' '
 
 -- Configure the options for Okular PDF viewer
 
--- Tell VimTeX to use Okular for viewing PDFs:
-vim.g.vimtex_view_method = 'okular'
-
 -- If you want custom Okular command-line options (such as forward search with --unique):
 -- NOTE: The default option for forward search is usually fine, but you can override it:
 -- vim.g.vimtex_view_okular_options = '--unique file:@pdf\\#src:@line@tex'
-
--- Specify a compiler method (default is latexmk; here we use latexrun):
-vim.g.vimtex_compiler_method = 'latexrun'
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
@@ -295,7 +289,15 @@ require('lazy').setup(
     -- tag = "v2.15", -- uncomment to pin to a specific release
     init = function()
       -- VimTeX configuration goes here, e.g.
-      vim.g.vimtex_view_method = "zathura"
+      vim.g.vimtex_view_method = "general"
+      -- Tell VimTeX to use Okular for viewing PDFs:
+      vim.g.vimtex_view_general_viewer = 'okular'
+      -- Specify a compiler VimTeX uses latexmk as the default compiler backend. If you use it, which is
+      -- strongly recommended, you probably don't need to configure anything. If you
+      -- want another compiler backend, you can change it as follows. The list of
+      -- supported backends and further explanation is provided in the documentation,
+      -- see ":help vimtex-compiler". method (default is latexmk; here we use latexrun):
+      -- vim.g.vimtex_compiler_method = 'latexrun'
     end
   },
 
@@ -362,7 +364,7 @@ require('lazy').setup(
         spec = {
           { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
           { '<leader>d', group = '[D]ebug' },
-          { '<leader>l', group = '[L]SP' },
+          { '<leader>p', group = '[L]SP' },
           { '<leader>r', group = '[R]ename' },
           { '<leader>s', group = '[S]earch' },
           { '<leader>w', group = '[W]orkspace' },
@@ -834,7 +836,8 @@ require('lazy').setup(
       },
       config = function()
         -- Require custiom snippets
-        require 'custom.snippets.snippets'
+        require 'custom.snippets.lua'
+        require 'custom.snippets.python'
 
         -- See `:help cmp`
         local cmp = require 'cmp'
