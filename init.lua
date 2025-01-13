@@ -106,12 +106,6 @@ end
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Configure the options for Okular PDF viewer
-
--- If you want custom Okular command-line options (such as forward search with --unique):
--- NOTE: The default option for forward search is usually fine, but you can override it:
--- vim.g.vimtex_view_okular_options = '--unique file:@pdf\\#src:@line@tex'
-
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -838,6 +832,7 @@ require('lazy').setup(
         -- Require custiom snippets
         require 'custom.snippets.lua'
         require 'custom.snippets.python'
+        require 'custom.snippets.latex'
 
         -- See `:help cmp`
         local cmp = require 'cmp'
