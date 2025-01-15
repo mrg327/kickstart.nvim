@@ -296,7 +296,8 @@ require('lazy').setup(
   },
 
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  { import = 'kickstart.plugins.debug' },
+  { import = 'custom.plugins.debug' },
+  { import = 'custom.plugins.present' },
 
     -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
     --
@@ -673,13 +674,15 @@ require('lazy').setup(
               cucumber = {
                 features = {
                   '**/features/**/*.feature', -- Add your feature file patterns here
+                  '**/features/*.feature', -- Add your feature file patterns here
                 },
                 glue = {
-                  '**/steps/**/*.py',
+                  -- '**/steps/**/*.py',
                   '**/tests/step_defs/**/*.py',
-                  '**/tests/**/*.py',
-                  'tests/**/*.py',
+                  -- '**/tests/**/*.py',
+                  -- 'tests/**/*.py',
                   '**/tests/step_defs/*.py',
+                  'tests/step_defs/*.py',
                 },
               },
             },
