@@ -226,6 +226,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Quality of life improvements (Added by Matthew)
+-- NOTE: Auto commands to make/save views and restore cursor postion after save
 
 -- Create a view after every save
 vim.api.nvim_create_autocmd('BufWritePost', {
@@ -310,22 +311,22 @@ require('lazy').setup(
     -- keys can be used to configure plugin behavior/loading/etc.
     --
 
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  { import = 'custom.plugins.lazydev' },
-  { import = 'custom.plugins.debug' },
-  { import = 'custom.plugins.mini' },
-  { import = 'custom.plugins.gitsigns' },
-  { import = 'custom.plugins.colorscheme' },
-  { import = 'custom.plugins.oil' },
-  { import = 'custom.plugins.vimtex' },
-  { import = 'custom.plugins.telescope' },
-  { import = 'custom.plugins.lsp' },
-  { import = 'custom.plugins.autocomplete' },
-  { import = 'custom.plugins.autoformat' },
-  { import = 'custom.plugins.whichkey' },
-  { import = 'custom.plugins.treesitter' },
-  { import = 'custom.plugins.luvit' },
-  { import = 'custom.plugins.todo' },
+    --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+    { import = 'custom.plugins.lazydev' },
+    { import = 'custom.plugins.debug' },
+    { import = 'custom.plugins.mini' },
+    { import = 'custom.plugins.gitsigns' },
+    { import = 'custom.plugins.colorscheme' },
+    { import = 'custom.plugins.oil' },
+    { import = 'custom.plugins.vimtex' },
+    { import = 'custom.plugins.telescope' },
+    { import = 'custom.plugins.lsp' },
+    { import = 'custom.plugins.autocomplete' },
+    { import = 'custom.plugins.autoformat' },
+    { import = 'custom.plugins.whichkey' },
+    { import = 'custom.plugins.treesitter' },
+    { import = 'custom.plugins.luvit' },
+    { import = 'custom.plugins.todo' },
 
     -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
     --
@@ -351,26 +352,26 @@ require('lazy').setup(
 
     -- Highlight todo, notes, etc in comments
 
-  -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
-  -- init.lua. If you want these files, they are in the repository, so you can just download them and
-  -- place them in the correct locations.
+    -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
+    -- init.lua. If you want these files, they are in the repository, so you can just download them and
+    -- place them in the correct locations.
 
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
-  --
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-  --
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+    -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
+    --
+    --  Here are some example plugins that I've included in the Kickstart repository.
+    --  Uncomment any of the lines below to enable them (you will need to restart nvim).
+    --
+    -- require 'kickstart.plugins.indent_line',
+    -- require 'kickstart.plugins.lint',
+    -- require 'kickstart.plugins.autopairs',
+    -- require 'kickstart.plugins.neo-tree',
+    -- require 'kickstart.plugins.debug',
+    -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    This is the easiest way to modularize your config.
-  --
-  --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
+    -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
+    --    This is the easiest way to modularize your config.
+    --
+    --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   }, {
     ui = {
       -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -392,15 +393,10 @@ require('lazy').setup(
       },
     },
   }
-  )
+)
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 --
--- NOTE: Auto commands to make/save views and restore cursor postion after save
-
-
 
 -- TODO: Future Plans for this init.vim:
--- Modular setup of libraries and other Keymaps such that they exist compartmentalized in their own files
--- Add keys to make debugging in Python faster. Make this generalizable for the future
