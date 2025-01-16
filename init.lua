@@ -93,11 +93,11 @@ I offer only what I have to contribute to what you have started.
 -- Import the env config
 -- This contains computer-specific config dirs and
 -- should be changed for each machine
-env_paths = require 'dir_import'
+ENV_PATHS = require 'dir_import'
 
 -- Set the default shell to powershell
-if env_paths['shell'] then
-  vim.o.shell = env_paths['shell']
+if ENV_PATHS['shell'] then
+  vim.o.shell = ENV_PATHS['shell']
 end
 
 -- Set <space> as the leader key
@@ -225,6 +225,58 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Quality of life improvements (Added by Matthew)
+
+-- Create a view after every save
+vim.api.nvim_create_autocmd('BufWritePost', {
+  pattern = '*',
+  command = 'mkview',
+})
+
+-- Automatically load view when entering a buffer
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  pattern = '*',
+  command = 'silent! loadview',
+})
+
+-- Restore cursor position if applicable
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = '*',
+  callback = function()
+    if vim.bo.filetype ~= 'commit' and vim.fn.line '\'"' > 1 and vim.fn.line '\'"' <= vim.fn.line '$' then
+      vim.cmd 'normal! g`"zv'
+    end
+  end,
+})
+
+-- Traditional Save
+vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
+vim.keymap.set('i', '<C-s>', '<cmd>w<CR>')
+
+-- Change Working Directory to Current File
+vim.keymap.set('n', '<leader>cd', function()
+  vim.cmd 'cd %:p:h'
+end, { desc = '[C]hange Working [D]irectory to Active Buffer' })
+
+-- Create a new term when pressing F6
+vim.keymap.set('n', '<F6>', function()
+  vim.cmd 'term'
+end, { desc = 'Create a term' })
+
+-- Create a new tab when pressing F7
+vim.keymap.set('n', '<F7>', function()
+  vim.cmd 'tabnew'
+end, { desc = 'Create a tab' })
+-- Close a tab when pressing Shift + F7
+vim.keymap.set('n', '<S-F7>', function()
+  vim.cmd 'tabclose'
+end, { desc = 'Close a tab' })
+-- Delete a buffer when presisng Control + F7
+vim.keymap.set('n', '<C-S-F7>', function()
+  vim.cmd 'bd!'
+end, { desc = 'Delete a buffer' })
+
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -259,6 +311,7 @@ require('lazy').setup(
     --
 
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+  { import = 'custom.plugins.lazydev' },
   { import = 'custom.plugins.debug' },
   { import = 'custom.plugins.mini' },
   { import = 'custom.plugins.gitsigns' },
@@ -271,6 +324,8 @@ require('lazy').setup(
   { import = 'custom.plugins.autoformat' },
   { import = 'custom.plugins.whichkey' },
   { import = 'custom.plugins.treesitter' },
+  { import = 'custom.plugins.luvit' },
+  { import = 'custom.plugins.todo' },
 
     -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
     --
@@ -294,28 +349,7 @@ require('lazy').setup(
     --
     -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
-
-    -- LSP Plugins
-    {
-      -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-      -- used for completion, annotations and signatures of Neovim apis
-      'folke/lazydev.nvim',
-      ft = 'lua',
-      opts = {
-        library = {
-          -- Load luvit types when the `vim.uv` word is found
-          { path = 'luvit-meta/library', words = { 'vim%.uv' } },
-        },
-      },
-    },
-    { 'Bilal2453/luvit-meta', lazy = true },
-
     -- Highlight todo, notes, etc in comments
-    { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
-
-
-    
-
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -360,75 +394,12 @@ require('lazy').setup(
   }
   )
 
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-  --
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require('kickstart.plugins.debug')
-  -- require('kickstart.plugins.gitsigns') -- adds gitsigns recommend keymaps
-
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 --
 -- NOTE: Auto commands to make/save views and restore cursor postion after save
---
--- Create a view after every save
-vim.api.nvim_create_autocmd('BufWritePost', {
-  pattern = '*',
-  command = 'mkview',
-})
-
--- Automatically load view when entering a buffer
-vim.api.nvim_create_autocmd('BufWinEnter', {
-  pattern = '*',
-  command = 'silent! loadview',
-})
-
--- Restore cursor position if applicable
-vim.api.nvim_create_autocmd('BufReadPost', {
-  pattern = '*',
-  callback = function()
-    if vim.bo.filetype ~= 'commit' and vim.fn.line '\'"' > 1 and vim.fn.line '\'"' <= vim.fn.line '$' then
-      vim.cmd 'normal! g`"zv'
-    end
-  end,
-})
 
 
--- Quality of life improvements (Added by Matthew)
-
--- Traditional Save
-vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
-vim.keymap.set('i', '<C-s>', '<cmd>w<CR>')
-
--- Change Working Directory to Current File
-vim.keymap.set('n', '<leader>cd', function()
-  vim.cmd 'cd %:p:h'
-end, { desc = '[C]hange Working [D]irectory to Active Buffer' })
-
--- Create a new term when pressing F6
-vim.keymap.set('n', '<F6>', function()
-  vim.cmd 'term'
-end, { desc = 'Create a term' })
-
--- Create a new tab when pressing F7
-vim.keymap.set('n', '<F7>', function()
-  vim.cmd 'tabnew'
-end, { desc = 'Create a tab' })
--- Close a tab when pressing Shift + F7
-vim.keymap.set('n', '<S-F7>', function()
-  vim.cmd 'tabclose'
-end, { desc = 'Close a tab' })
--- Delete a buffer when presisng Control + F7
-vim.keymap.set('n', '<C-S-F7>', function()
-  vim.cmd 'bd!'
-end, { desc = 'Delete a buffer' })
-
--- Oil File Browser Keymaps
-vim.keymap.set('n', '<leader>of', "<cmd>Oil<CR>", {desc = 'Open [O]il [F]ile Browser'})
 
 -- TODO: Future Plans for this init.vim:
 -- Modular setup of libraries and other Keymaps such that they exist compartmentalized in their own files

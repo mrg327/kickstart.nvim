@@ -156,10 +156,10 @@ return {
       -- clangd = {},
       -- gopls = {},
       pyright = {
-        cmd = { env_paths['pyright'], '--stdio' },
+        cmd = { ENV_PATHS['pyright'], '--stdio' },
         settings = {
           python = {
-            pythonPath = env_paths['python'],
+            pythonPath = ENV_PATHS['python'],
           },
         },
       },
