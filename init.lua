@@ -294,10 +294,18 @@ require('lazy').setup(
       -- vim.g.vimtex_compiler_method = 'latexrun'
     end
   },
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+  },
 
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   { import = 'custom.plugins.debug' },
-  { import = 'custom.plugins.present' },
 
     -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
     --
@@ -1137,6 +1145,9 @@ end, { desc = 'Close a tab' })
 vim.keymap.set('n', '<C-S-F7>', function()
   vim.cmd 'bd!'
 end, { desc = 'Delete a buffer' })
+
+-- Oil File Browser Keymaps
+vim.keymap.set('n', '<leader>of', "<cmd>Oil<CR>", {desc = 'Open [O]il [F]ile Browser'})
 
 -- TODO: Future Plans for this init.vim:
 -- Modular setup of libraries and other Keymaps such that they exist compartmentalized in their own files
