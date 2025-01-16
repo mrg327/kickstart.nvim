@@ -282,7 +282,7 @@ end, { desc = 'Delete a buffer' })
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  local lazrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
   if vim.v.shell_error ~= 0 then
     error('Error cloning lazy.nvim:\n' .. out)
@@ -311,22 +311,24 @@ require('lazy').setup(
     -- keys can be used to configure plugin behavior/loading/etc.
     --
 
-    --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-    { import = 'custom.plugins.lazydev' },
-    { import = 'custom.plugins.debug' },
-    { import = 'custom.plugins.mini' },
-    { import = 'custom.plugins.gitsigns' },
-    { import = 'custom.plugins.colorscheme' },
-    { import = 'custom.plugins.oil' },
-    { import = 'custom.plugins.vimtex' },
-    { import = 'custom.plugins.telescope' },
-    { import = 'custom.plugins.lsp' },
+    -- These following lines import plugins from lua/custom/plugins
+    -- Comment or uncomment to enable or disable the plugins
+    --
     { import = 'custom.plugins.autocomplete' },
     { import = 'custom.plugins.autoformat' },
-    { import = 'custom.plugins.whichkey' },
-    { import = 'custom.plugins.treesitter' },
+    { import = 'custom.plugins.colorscheme' },
+    { import = 'custom.plugins.debug' },
+    { import = 'custom.plugins.gitsigns' },
+    { import = 'custom.plugins.lazydev' },
+    { import = 'custom.plugins.lsp' },
     { import = 'custom.plugins.luvit' },
+    { import = 'custom.plugins.mini' },
+    { import = 'custom.plugins.oil' },
+    { import = 'custom.plugins.telescope' },
     { import = 'custom.plugins.todo' },
+    { import = 'custom.plugins.treesitter' },
+    { import = 'custom.plugins.vimtex' },
+    { import = 'custom.plugins.whichkey' },
 
     -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
     --
