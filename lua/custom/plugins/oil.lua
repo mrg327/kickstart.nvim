@@ -9,6 +9,6 @@ return {
   config = function()
     require("oil").setup()
     -- Oil File Browser Keymaps
-    vim.keymap.set('n', '<leader>of', "<cmd>Oil<CR>", {desc = 'Open [O]il [F]ile Browser'})
+    vim.keymap.set('n', '<leader>of', "<cmd>Oil<CR>", {desc = 'Open [O]pen [F]ile Browser'})
   end
 }

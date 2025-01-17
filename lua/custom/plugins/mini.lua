@@ -7,41 +7,21 @@ return { -- Collection of various small independent plugins/modules
         --  - va)  - [V]isually select [A]round [)]paren
         --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
         --  - ci'  - [C]hange [I]nside [']quote
-        -- require('mini.ai').setup { n_lines = 500 }
+        require('mini.ai').setup { n_lines = 500 }
 
         -- Add/delete/replace surroundings (brackets, quotes, etc.)
         --
         -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
         -- - sd'   - [S]urround [D]elete [']quotes
         -- - sr)'  - [S]urround [R]eplace [)] [']
-        -- require('mini.surround').setup()
+        require('mini.surround').setup()
 
         -- Add mini pairs for autopairing of (), [], {}, '', '', <>
         require('mini.pairs').setup()
 
-        -- Use MiniGit for git related actions
-        -- require('mini.git').setup()
-        -- -- Set custom keymaps for git actions
-        -- -- - gp   - [G]it [A]dd [U]pdates
-        -- vim.keymap.set('n', '<leader>gau', function()
-        --   vim.cmd 'Git add -u'
-        -- end, { desc = '[G]it [A]dd [U]pdates' })
-        -- -- - gp   - [G]it [C]ommit
-        -- vim.keymap.set('n', '<leader>gc', function()
-        --   vim.cmd 'Git commit'
-        -- end, { desc = '[G]it [C]ommit' })
-        -- -- - gp   - [G]it [P]ull
-        -- vim.keymap.set('n', '<leader>gp', function()
-        --   vim.cmd 'Git pull'
-        -- end, { desc = '[G]it [P]ull' })
-        -- -- - gpsh - [G]it [P]ush
-        -- vim.keymap.set('n', '<leader>gpsh', function()
-        --   vim.cmd 'Git push'
-        -- end, { desc = '[G]it [P]ush' })
-        -- -- - gs   - [G]it [S]tatus
-        -- vim.keymap.set('n', '<leader>gs', function()
-        --   vim.cmd 'Git status'
-        -- end, { desc = '[G]it [S]tatus' })
+        -- Add mini files for easy file browsing and creation
+        require('mini.files').setup()
+        vim.keymap.set('n', '<leader>of', function() MiniFiles.open() end, {desc = 'Open [O]pen [F]ile Browser'})
 
         -- Simple and easy statusline.
         --  You could remove this setup call if you don't like it,

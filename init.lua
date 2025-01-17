@@ -323,7 +323,6 @@ require('lazy').setup(
     { import = 'custom.plugins.lsp' },
     { import = 'custom.plugins.luvit' },
     { import = 'custom.plugins.mini' },
-    { import = 'custom.plugins.oil' },
     { import = 'custom.plugins.snacks' },
     { import = 'custom.plugins.todo' },
     { import = 'custom.plugins.treesitter' },
