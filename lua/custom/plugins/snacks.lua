@@ -8,12 +8,12 @@ return {
     dashboard = { enabled = true },
     indent = { enabled = true },
     input = { enabled = true },
+    lazygit = { enabled = true},
     notifier = {
       enabled = true,
       timeout = 3000,
     },
     quickfile = { enabled = true },
-    scroll = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = true },
     styles = {
@@ -24,19 +24,6 @@ return {
   },
   keys = {
     -- File Picker keybinds 
-    -- Previous keybinds from telescope
-    --[[
-        vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-        vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-        vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-        vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-        vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-        vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-        vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-        vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-        vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-        vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-    --]]
     { "<leader><leader>",  function() Snacks.picker.buffers() end, desc = "Search Buffers" },
     { "<leader>s.", function() Snacks.picker.recent() end, desc = "Recent" },
     { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
@@ -47,6 +34,12 @@ return {
     { "<leader>sn",  function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "[S]earch [N]eovim" },
     { "<leader>sr", function() Snacks.picker.resume() end, desc = "Resume" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
+    -- LSP Picker keybinds
+    { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+    { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+    { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+    { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+    { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
 
     -- Zen related keybinds
     { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
