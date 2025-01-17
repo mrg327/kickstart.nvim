@@ -34,6 +34,9 @@ return {
     { "<leader>sn",  function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "[S]earch [N]eovim" },
     { "<leader>sr", function() Snacks.picker.resume() end, desc = "Resume" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
+    { "<leader>/", function() Snacks.picker.lines() end, desc = "Search Current Buffer" },
+    { "<leader>s/", function() Snacks.picker.grep_buffers() end, desc = "Search Open Buffer" },
+
     -- LSP Picker keybinds
     { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
     { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
