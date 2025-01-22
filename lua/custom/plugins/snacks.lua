@@ -26,6 +26,8 @@ return {
     -- File Picker keybinds 
     { "<leader><leader>",  function() Snacks.picker.buffers() end, desc = "Search Buffers" },
     { "<leader>s.", function() Snacks.picker.recent() end, desc = "Recent" },
+    { "<leader>sc", function() Snacks.picker.command_history() end, desc = "Command History" },
+    { "<leader>sC", function() Snacks.picker.commands() end, desc = "Commands" },
     { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
     { "<leader>sf", function() Snacks.picker.files() end, desc = "Find Files" },
     { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
