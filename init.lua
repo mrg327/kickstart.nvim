@@ -259,6 +259,11 @@ vim.keymap.set('n', '<leader>cd', function()
   vim.cmd 'cd %:p:h'
 end, { desc = '[C]hange Working [D]irectory to Active Buffer' })
 
+-- Change Local Working Directory to Current Buffer
+vim.keymap.set('n', '<leader>ccd', function()
+  vim.cmd 'lcd %:p:h'
+end, { desc = '[C]hange [C]urrent Working [D]irectory to Active Buffer' })
+
 -- Create a new term when pressing F6
 vim.keymap.set('n', '<F6>', function()
   vim.cmd 'term'
