@@ -282,6 +282,8 @@ vim.keymap.set('n', '<C-S-F7>', function()
   vim.cmd 'bd!'
 end, { desc = 'Delete a buffer' })
 
+-- Turn off swapfiles
+vim.opt.swapfile = false
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
