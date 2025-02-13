@@ -185,7 +185,7 @@ vim.keymap.set('n', '<leader>qi', vim.diagnostic.setloclist, { desc = 'Open diag
 
 -- TODO Comments Quickfix List
 vim.keymap.set('n', '<leader>qt', function()
-  vim.cmd 'TodoQuickFix'
+  vim.cmd('TodoQuickFix cwd=' .. vim.fn.expand("%:p:h"))
 end, { desc = 'Open diagnostic [Q]uickfix [T]odo list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
