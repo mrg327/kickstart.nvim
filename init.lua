@@ -328,6 +328,7 @@ require('lazy').setup(
     { import = 'custom.plugins.gitsigns' },
     { import = 'custom.plugins.lazydev' },
     { import = 'custom.plugins.lsp' },
+    { import = 'custom.plugins.llm' },
     { import = 'custom.plugins.luvit' },
     { import = 'custom.plugins.mini' },
     { import = 'custom.plugins.snacks' },
