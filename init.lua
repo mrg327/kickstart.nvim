@@ -200,7 +200,6 @@ end
 
 -- this is super basic. I might improve it at some point, but it's good enough for how little I use
 -- the QF list
-vim.keymap.set("n", "dd", del_qf_item, { silent = true, buffer = true, desc = "Remove entry from QF" })
 vim.keymap.set("v", "D", del_qf_item, { silent = true, buffer = true, desc = "Remove entry from QF" })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
