@@ -190,18 +190,6 @@ vim.keymap.set('n', '<leader>qt', function()
   vim.cmd('TodoQuickFix cwd=' .. vim.fn.expand("%:p:h"))
 end, { desc = 'Open diagnostic [Q]uickfix [T]odo list' })
 
-local del_qf_item = function()
-  local items = vim.fn.getqflist()
-  local line = vim.fn.line('.')
-  table.remove(items, line)
-  vim.fn.setqflist(items, "r")
-  vim.api.nvim_win_set_cursor(0, { line, 0 })
-end
-
--- this is super basic. I might improve it at some point, but it's good enough for how little I use
--- the QF list
-vim.keymap.set("v", "D", del_qf_item, { silent = true, buffer = true, desc = "Remove entry from QF" })
-
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
