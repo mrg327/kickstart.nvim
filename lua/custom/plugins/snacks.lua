@@ -26,12 +26,15 @@ return {
     -- File Picker keybinds 
     { "<leader><leader>",  function() Snacks.picker.buffers() end, desc = "Search Buffers" },
     { "<leader>s.", function() Snacks.picker.recent() end, desc = "Recent" },
+    { "<leader>sc", function() Snacks.picker.command_history() end, desc = "Command History" },
+    { "<leader>sC", function() Snacks.picker.commands() end, desc = "Commands" },
     { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
     { "<leader>sf", function() Snacks.picker.files() end, desc = "Find Files" },
     { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
     { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
     { "<leader>sn",  function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "[S]earch [N]eovim" },
+    { "<leader>sp", function() Snacks.picker.projects() end, desc = "Projects" },
     { "<leader>sr", function() Snacks.picker.resume() end, desc = "Resume" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
     { "<leader>/", function() Snacks.picker.lines() end, desc = "Search Current Buffer" },
@@ -43,6 +46,7 @@ return {
     { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
     { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
     { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+    { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
 
     -- Zen related keybinds
     { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
