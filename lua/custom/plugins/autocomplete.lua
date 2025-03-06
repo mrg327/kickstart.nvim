@@ -33,6 +33,7 @@ return { -- Autocompletion
     --  into multiple repos for maintenance purposes.
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
+    'onsails/lspkind-nvim', -- Optional: for icons in completion
   },
   config = function()
     -- Require custiom snippets
@@ -114,6 +115,18 @@ return { -- Autocompletion
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
+      },
+formatting = {
+        format = require("lspkind").cmp_format({
+          mode = "symbol_text",
+          maxwidth = 50,
+          ellipsis_char = "...",
+        }),
+      },
+      -- Window styling for a cleaner look.
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
       },
     }
   end,
