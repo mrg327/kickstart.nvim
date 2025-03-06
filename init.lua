@@ -109,7 +109,7 @@ vim.g.maplocalleader = ' '
 vim.g.python3_host_prog = ENV_PATHS['python']
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false 
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -330,6 +330,7 @@ require('lazy').setup(
     { import = 'custom.plugins.gitsigns' },
     { import = 'custom.plugins.lazydev' },
     { import = 'custom.plugins.lsp' },
+    { import = 'custom.plugins.llm' },
     { import = 'custom.plugins.luvit' },
     { import = 'custom.plugins.mini' },
     { import = 'custom.plugins.snacks' },
