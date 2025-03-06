@@ -39,7 +39,6 @@ return {
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
     { "<leader>/", function() Snacks.picker.lines() end, desc = "Search Current Buffer" },
     { "<leader>s/", function() Snacks.picker.grep_buffers() end, desc = "Search Open Buffer" },
-    { "<leader>st", function() Snacks.picker.todo_comments() end, desc = "Todo" },
 
     -- LSP Picker keybinds
     { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
