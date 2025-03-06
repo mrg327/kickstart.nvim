@@ -106,6 +106,8 @@ end
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.g.python3_host_prog = ENV_PATHS['python']
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -185,7 +187,7 @@ vim.keymap.set('n', '<leader>qi', vim.diagnostic.setloclist, { desc = 'Open diag
 
 -- TODO Comments Quickfix List
 vim.keymap.set('n', '<leader>qt', function()
-  vim.cmd 'TodoQuickFix'
+  vim.cmd('TodoQuickFix cwd=' .. vim.fn.expand("%:p:h"))
 end, { desc = 'Open diagnostic [Q]uickfix [T]odo list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
