@@ -39,6 +39,7 @@ return { -- Autocompletion
     -- Require custiom snippets
     require 'custom.snippets.lua'
     require 'custom.snippets.python'
+    require 'custom.snippets.cucumber'
     require 'custom.snippets.latex'
 
     -- See `:help cmp`
