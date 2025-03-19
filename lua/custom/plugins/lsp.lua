@@ -153,14 +153,33 @@ return {
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
-      ast_grep = {},
       -- clangd = {},
       -- gopls = {},
+      -- pyright = {
+      --   settings = {
+      --     python = {
+      --     },
+      --   },
+      -- },
+      ruff = {
+        on_attach = function(client, _)
+          -- Disable hover, go-to definition, and autocomplete for ruff
+          client.server_capabilities.hoverProvider = false
+          client.server_capabilities.definitionProvider = false
+          client.server_capabilities.completionProvider = false
+        end,
+      },
       pyright = {
         cmd = { ENV_PATHS['pyright'], '--stdio' },
         settings = {
           python = {
             pythonPath = ENV_PATHS['python'],
+            analysis = {
+              typeCheckingMode = "basic", -- Avoid conflicts with Ruff
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "openFilesOnly",
+            },
           },
         },
       },
@@ -194,6 +213,7 @@ return {
       -- tsserver = {},
       --
 
+      ast_grep = {},
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
