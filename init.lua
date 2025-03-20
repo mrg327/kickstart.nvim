@@ -324,13 +324,14 @@ require('lazy').setup(
     -- Comment or uncomment to enable or disable the plugins
     --
     { import = 'custom.plugins.autocomplete' },
+    { import = 'custom.plugins.markdown-preview' },
     { import = 'custom.plugins.autoformat' },
     { import = 'custom.plugins.colorscheme' },
     { import = 'custom.plugins.debug' },
     { import = 'custom.plugins.gitsigns' },
     { import = 'custom.plugins.lazydev' },
-    { import = 'custom.plugins.lsp' },
     { import = 'custom.plugins.llm' },
+    { import = 'custom.plugins.lsp' },
     { import = 'custom.plugins.luvit' },
     { import = 'custom.plugins.mini' },
     { import = 'custom.plugins.snacks' },
