@@ -16,6 +16,8 @@ return { -- Collection of various small independent plugins/modules
         -- - sr)'  - [S]urround [R]eplace [)] [']
         require('mini.surround').setup()
 
+        require('mini.align').setup()
+
         -- Add mini pairs for autopairing of (), [], {}, '', '', <>
         require('mini.pairs').setup()
 
