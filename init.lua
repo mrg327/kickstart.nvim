@@ -299,6 +299,15 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- Keybinds that use the Alt key
+
+-- Window Maps
+vim.keymap.set('n', '<M-s>', '<C-w>s', {desc = "[S]plit the current buffer"})
+vim.keymap.set('n', '<M-v>', '<C-w>v', {desc = "[V]ertically split the current buffer"})
+vim.keymap.set('n', '<M-o>', '<C-w>o', {desc = "Show [O]nly the active buffer"})
+vim.keymap.set('n', '<M-=>', '<C-w>=', {desc = "Set buffers to equal size"})
+
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -407,6 +416,8 @@ require('lazy').setup(
   }
 )
 
+-- Add provisions to use htmldjango snippets in html files
+require'luasnip'.filetype_extend("htmldjango", {"html"})
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 --
