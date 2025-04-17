@@ -1,39 +1,46 @@
+local response_format = "Respond EXACTLY in this format:\n```$ftype\n<your code>\n```"
+
 return {
-  'huggingface/llm.nvim',
-  enabled = false,
-  event = 'VeryLazy',
-  keys = {
-    {
-      '<c-o>',
-      function()
-        require('llm.completion').complete()
-      end,
-      mode = 'i',
-      desc = 'complete',
-    },
+  "nomnivore/ollama.nvim",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
   },
-  opts = {
-    lsp = {
-      bin_path = 'C:\\Users\\Owner\\AppData\\Local\\nvim-data\\mason\\packages\\llm-ls',
-      cmd_env = { LLM_LOG_LEVEL = 'DEBUG' },
+
+  -- All the user commands added by the plugin
+  cmd = { "Ollama", "OllamaModel", "OllamaServe", "OllamaServeStop" },
+
+  keys = {
+    -- Sample keybind for prompt menu. Note that the <c-u> is important for selections to work properly.
+    {
+      "<leader>oo",
+      ":<c-u>lua require('ollama').prompt()<cr>",
+      desc = "ollama prompt",
+      mode = { "n", "v" },
     },
 
-    backend = 'ollama',
-    model = 'deepseek-coder:6.7b-base',
-    url = 'http://localhost:11434', -- llm-ls uses "/api/generate"
-    -- cf https://github.com/ollama/ollama/blob/main/docs/api.md#parameters
-    fim = {
-      enabled = true,
-      prefix = '<｜fim▁begin｜>',
-      suffix = '<｜fim▁hole｜>',
-      middle = '<｜fim▁end｜>',
-    },
-    request_body = {
-      -- Modelfile options for the model you use
-      options = {
-        temperature = 0.2,
-        top_p = 0.95,
-      },
+    -- Sample keybind for direct prompting. Note that the <c-u> is important for selections to work properly.
+    {
+      "<leader>oG",
+      ":<c-u>lua require('ollama').prompt('Generate_Code')<cr>",
+      desc = "ollama Generate Code",
+      mode = { "n", "v" },
     },
   },
+
+
+  ---@type Ollama.Config
+  opts = {
+    -- your configuration overrides
+    url = ENV_PATHS['lm_addr'],
+    prompts = {
+
+      Comment_Code = {
+        prompt = "Modify this $ftype code in the following way: Add google-style docstrings to all functions, classes, and methods\n\n"
+          .. response_format
+          .. "\n\n```$ftype\n$sel```",
+        action = "replace",
+      },
+
+    },
+  }
 }

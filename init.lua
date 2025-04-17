@@ -100,6 +100,10 @@ if ENV_PATHS['shell'] then
   vim.o.shell = ENV_PATHS['shell']
 end
 
+if ENV_PATHS['undotree'] then
+  vim.g.undotree_DiffCommand = ENV_PATHS['undotree']
+end
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -345,6 +349,7 @@ require('lazy').setup(
     { import = 'custom.plugins.mini' },
     { import = 'custom.plugins.snacks' },
     { import = 'custom.plugins.todo' },
+    { import = 'custom.plugins.undotree' },
     { import = 'custom.plugins.treesitter' },
     { import = 'custom.plugins.vimtex' },
     { import = 'custom.plugins.whichkey' },
