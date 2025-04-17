@@ -7,6 +7,6 @@ git update-index --no-assume-unchanged lua/dir_import.lua
 --]]
 
 local configs =
-  { pyright = 'C:/Users/Owner/AppData/Roaming/npm/pyright-langserver', python = 'C:/Users/Owner/.venv/Scripts/python.exe', shell = 'powershell.exe' }
+  { pyright = 'C:/Users/Owner/AppData/Roaming/npm/pyright-langserver', python = 'C:/Users/Owner/.venv/Scripts/python.exe', shell = 'powershell.exe', llm_addr = 'http://127.0.0.1:11434' }
 
 return configs
