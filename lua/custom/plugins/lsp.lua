@@ -164,25 +164,26 @@ return {
       ruff = {
         on_attach = function(client, _)
           -- Disable hover, go-to definition, and autocomplete for ruff
-          client.server_capabilities.hoverProvider = false
-          client.server_capabilities.definitionProvider = false
-          client.server_capabilities.completionProvider = false
+          -- client.server_capabilities.hoverProvider = false
+          -- client.server_capabilities.definitionProvider = false
+          -- client.server_capabilities.completionProvider = false
         end,
       },
-      pyright = {
-        cmd = { ENV_PATHS['pyright'], '--stdio' },
-        settings = {
-          python = {
-            pythonPath = ENV_PATHS['python'],
-            analysis = {
-              typeCheckingMode = "basic", -- Avoid conflicts with Ruff
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-              diagnosticMode = "openFilesOnly",
-            },
-          },
-        },
-      },
+      pylsp = {},
+      -- pyright = {
+      --   cmd = { ENV_PATHS['pyright'], '--stdio' },
+      --   settings = {
+      --     python = {
+      --       pythonPath = ENV_PATHS['python'],
+      --       analysis = {
+      --         typeCheckingMode = "basic", -- Avoid conflicts with Ruff
+      --         autoSearchPaths = true,
+      --         useLibraryCodeForTypes = true,
+      --         diagnosticMode = "openFilesOnly",
+      --       },
+      --     },
+      --   },
+      -- },
       cucumber_language_server = {
         settings = {
           cucumber = {
