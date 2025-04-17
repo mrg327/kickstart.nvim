@@ -98,6 +98,7 @@ ENV_PATHS = require 'dir_import'
 -- Set the default shell to powershell
 if ENV_PATHS['shell'] then
   vim.o.shell = ENV_PATHS['shell']
+  vim.g.undotree_DiffCommand = "FC"
 end
 
 -- Set <space> as the leader key
@@ -345,6 +346,7 @@ require('lazy').setup(
     { import = 'custom.plugins.mini' },
     { import = 'custom.plugins.snacks' },
     { import = 'custom.plugins.todo' },
+    { import = 'custom.plugins.undotree' },
     { import = 'custom.plugins.treesitter' },
     { import = 'custom.plugins.vimtex' },
     { import = 'custom.plugins.whichkey' },
