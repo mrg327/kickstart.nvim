@@ -32,6 +32,7 @@ return {
   opts = {
     -- your configuration overrides
     url = ENV_PATHS['lm_addr'],
+    model = 'llama3',
     prompts = {
 
       Comment_Code = {
