@@ -6,5 +6,3 @@ nvim
 spell/
 lazy-lock.json
 
-lua/dir_import.lua
-lua/dir_import.lua
