@@ -351,6 +351,7 @@ require('lazy').setup(
     { import = 'custom.plugins.lsp' },
     { import = 'custom.plugins.luvit' },
     { import = 'custom.plugins.mini' },
+    { import = 'custom.plugins.obsidian' },
     { import = 'custom.plugins.snacks' },
     { import = 'custom.plugins.todo' },
     { import = 'custom.plugins.undotree' },
@@ -424,6 +425,35 @@ require('lazy').setup(
     },
   }
 )
+
+require("obsidian").setup({
+  -- point this at your vault:
+  dir = "E:\\DnD\\metrophyre",
+
+  -- instead of timestamp‑slug, just slugify the title
+  note_id_func = function(title)
+    if title and title ~= "" then
+      -- turn “My New Note!” → “my-new-note”
+      return title
+        :gsub("%s+", "-")              -- spaces → dashes
+        :gsub("[^A-Za-z0-9%-]", "")    -- strip non‑alphanumerics/dashes
+        :lower()
+    else
+      -- fallback if you hit <Enter> on an empty title:
+      return tostring(os.time())
+    end
+  end,
+
+  -- ensure the file name uses your ID (i.e. your slug)
+  note_path_func = function(spec)
+    -- spec.id is whatever your note_id_func returned;
+    -- spec.dir is the Path object to your notes_subdir/vault
+    local p = spec.dir / spec.id
+    return p:with_suffix(".md")
+  end,
+
+  -- …all your other settings here…
+})
 
 -- Add provisions to use htmldjango snippets in html files
 require'luasnip'.filetype_extend("htmldjango", {"html"})

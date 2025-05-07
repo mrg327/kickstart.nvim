@@ -47,6 +47,7 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>r', group = '[R]ename' },
       { '<leader>g', group = '[G]it' },
       { '<leader>o', group = '[O]pen' },
+      { '<leader>b', group = 'O[B]sidian' },
       { '<leader>q', group = '[Q]uickfix' },
       { '<leader>u', group = 'Config[u]re Options' },
       { '<leader>s', group = '[S]earch' },
