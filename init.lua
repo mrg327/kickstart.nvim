@@ -91,42 +91,29 @@ I offer only what I have to contribute to what you have started.
 --]]
 --
 
-local function getHostname()
-  -- Try using environment variables first (works on Windows and some Unix systems)
+local function gethostname()
+  -- try using environment variables first (works on windows and some unix systems)
   local hostname = os.getenv 'COMPUTERNAME' or os.getenv 'HOSTNAME'
 
   if hostname and hostname ~= '' then
     return hostname
   end
-
-  -- Try reading from /etc/hostname (common on Linux)
-  local f = io.open('/etc/hostname', 'r')
-  if f then
-    local content = f:read '*l'
-    f:close()
-    if content and content ~= '' then
-      return content
-    end
-  end
-
-  -- Use io.popen as a last resort
-  local p = io.popen 'hostname 2>/dev/null || echo unknown-host'
-  if p then
-    local result = p:read '*l'
-    p:close()
-    return result or 'unknown-host'
-  end
-
   return ''
 end
 
--- Import the env config
--- This contains computer-specific config dirs and
+-- import the env config
+-- this contains computer-specific config dirs and
 -- should be changed for each machine
-ENV_PATHS = require
-getHostname()
+local hostname = gethostname()
 
--- Set the default shell to powershell
+-- Create a valid module name from the hostname
+-- Replace any invalid characters with underscores
+local config_module = hostname:gsub('[^%w_]', '_')
+
+-- Import the env config using pcall to safely handle errors
+success, ENV_PATHS = pcall(require, config_module)
+
+-- set the default shell to powershell
 if ENV_PATHS['shell'] then
   vim.o.shell = ENV_PATHS['shell']
 end
