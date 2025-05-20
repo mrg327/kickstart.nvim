@@ -98,7 +98,7 @@ local function gethostname()
   if hostname and hostname ~= '' then
     return hostname
   end
-  return ''
+  return 'default'
 end
 
 -- import the env config
