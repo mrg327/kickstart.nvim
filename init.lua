@@ -362,6 +362,7 @@ require('lazy').setup({
   { import = 'custom.plugins.colorscheme' },
   { import = 'custom.plugins.debug' },
   { import = 'custom.plugins.gitsigns' },
+  { import = 'custom.plugins.hardtime' },
   { import = 'custom.plugins.lazydev' },
   { import = 'custom.plugins.llm' },
   { import = 'custom.plugins.lsp' },
