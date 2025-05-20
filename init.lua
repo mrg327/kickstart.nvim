@@ -89,11 +89,42 @@ I would be nothing without your work. You have paved the way for many devs.
 I offer only what I have to contribute to what you have started.
 - MG
 --]]
+--
+
+local function getHostname()
+  -- Try using environment variables first (works on Windows and some Unix systems)
+  local hostname = os.getenv 'COMPUTERNAME' or os.getenv 'HOSTNAME'
+
+  if hostname and hostname ~= '' then
+    return hostname
+  end
+
+  -- Try reading from /etc/hostname (common on Linux)
+  local f = io.open('/etc/hostname', 'r')
+  if f then
+    local content = f:read '*l'
+    f:close()
+    if content and content ~= '' then
+      return content
+    end
+  end
+
+  -- Use io.popen as a last resort
+  local p = io.popen 'hostname 2>/dev/null || echo unknown-host'
+  if p then
+    local result = p:read '*l'
+    p:close()
+    return result or 'unknown-host'
+  end
+
+  return ''
+end
 
 -- Import the env config
 -- This contains computer-specific config dirs and
 -- should be changed for each machine
-ENV_PATHS = require 'dir_import'
+ENV_PATHS = require
+getHostname()
 
 -- Set the default shell to powershell
 if ENV_PATHS['shell'] then
@@ -191,7 +222,7 @@ vim.keymap.set('n', '<leader>qi', vim.diagnostic.setloclist, { desc = 'Open diag
 
 -- TODO Comments Quickfix List
 vim.keymap.set('n', '<leader>qt', function()
-  vim.cmd('TodoQuickFix cwd=' .. vim.fn.expand("%:p:h"))
+  vim.cmd('TodoQuickFix cwd=' .. vim.fn.expand '%:p:h')
 end, { desc = 'Open diagnostic [Q]uickfix [T]odo list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -310,11 +341,10 @@ vim.opt.rtp:prepend(lazypath)
 -- Keybinds that use the Alt key
 
 -- Window Maps
-vim.keymap.set('n', '<M-s>', '<C-w>s', {desc = "[S]plit the current buffer"})
-vim.keymap.set('n', '<M-v>', '<C-w>v', {desc = "[V]ertically split the current buffer"})
-vim.keymap.set('n', '<M-o>', '<C-w>o', {desc = "Show [O]nly the active buffer"})
-vim.keymap.set('n', '<M-=>', '<C-w>=', {desc = "Set buffers to equal size"})
-
+vim.keymap.set('n', '<M-s>', '<C-w>s', { desc = '[S]plit the current buffer' })
+vim.keymap.set('n', '<M-v>', '<C-w>v', { desc = '[V]ertically split the current buffer' })
+vim.keymap.set('n', '<M-o>', '<C-w>o', { desc = 'Show [O]nly the active buffer' })
+vim.keymap.set('n', '<M-=>', '<C-w>=', { desc = 'Set buffers to equal size' })
 
 -- [[ Configure and install plugins ]]
 --
@@ -327,116 +357,114 @@ vim.keymap.set('n', '<M-=>', '<C-w>=', {desc = "Set buffers to equal size"})
 --    :Lazy update
 --
 -- NOTE: Here is where you install your plugins.
-require('lazy').setup(
-  {
-    -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-    'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+require('lazy').setup({
+  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
-    -- NOTE: Plugins can also be added by using a table,
-    -- with the first argument being the link and the following
-    -- keys can be used to configure plugin behavior/loading/etc.
-    --
+  -- NOTE: Plugins can also be added by using a table,
+  -- with the first argument being the link and the following
+  -- keys can be used to configure plugin behavior/loading/etc.
+  --
 
-    -- These following lines import plugins from lua/custom/plugins
-    -- Comment or uncomment to enable or disable the plugins
-    --
-    { import = 'custom.plugins.autocomplete' },
-    { import = 'custom.plugins.markdown-preview' },
-    { import = 'custom.plugins.autoformat' },
-    { import = 'custom.plugins.colorscheme' },
-    { import = 'custom.plugins.debug' },
-    { import = 'custom.plugins.gitsigns' },
-    { import = 'custom.plugins.lazydev' },
-    { import = 'custom.plugins.llm' },
-    { import = 'custom.plugins.lsp' },
-    { import = 'custom.plugins.luvit' },
-    { import = 'custom.plugins.mini' },
-    { import = 'custom.plugins.obsidian' },
-    { import = 'custom.plugins.snacks' },
-    { import = 'custom.plugins.todo' },
-    { import = 'custom.plugins.undotree' },
-    { import = 'custom.plugins.treesitter' },
-    { import = 'custom.plugins.vimtex' },
-    { import = 'custom.plugins.whichkey' },
+  -- These following lines import plugins from lua/custom/plugins
+  -- Comment or uncomment to enable or disable the plugins
+  --
+  { import = 'custom.plugins.autocomplete' },
+  { import = 'custom.plugins.markdown-preview' },
+  { import = 'custom.plugins.autoformat' },
+  { import = 'custom.plugins.colorscheme' },
+  { import = 'custom.plugins.debug' },
+  { import = 'custom.plugins.gitsigns' },
+  { import = 'custom.plugins.lazydev' },
+  { import = 'custom.plugins.llm' },
+  { import = 'custom.plugins.lsp' },
+  { import = 'custom.plugins.luvit' },
+  { import = 'custom.plugins.mini' },
+  { import = 'custom.plugins.obsidian' },
+  { import = 'custom.plugins.snacks' },
+  { import = 'custom.plugins.todo' },
+  { import = 'custom.plugins.undotree' },
+  { import = 'custom.plugins.treesitter' },
+  { import = 'custom.plugins.vimtex' },
+  { import = 'custom.plugins.whichkey' },
 
-    -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
-    --
-    -- This is often very useful to both group configuration, as well as handle
-    -- lazy loading plugins that don't need to be loaded immediately at startup.
-    --
-    -- For example, in the following configuration, we use:
-    --  event = 'VimEnter'
-    --
-    -- which loads which-key before all the UI elements are loaded. Events can be
-    -- normal autocommands events (`:help autocmd-events`).
-    --
-    -- Then, because we use the `config` key, the configuration only runs
-    -- after the plugin has been loaded:
-    --  config = function() ... end
+  -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
+  --
+  -- This is often very useful to both group configuration, as well as handle
+  -- lazy loading plugins that don't need to be loaded immediately at startup.
+  --
+  -- For example, in the following configuration, we use:
+  --  event = 'VimEnter'
+  --
+  -- which loads which-key before all the UI elements are loaded. Events can be
+  -- normal autocommands events (`:help autocmd-events`).
+  --
+  -- Then, because we use the `config` key, the configuration only runs
+  -- after the plugin has been loaded:
+  --  config = function() ... end
 
-    -- NOTE: Plugins can specify dependencies.
-    --
-    -- The dependencies are proper plugin specifications as well - anything
-    -- you do for a plugin at the top level, you can do for a dependency.
-    --
-    -- Use the `dependencies` key to specify the dependencies of a particular plugin
+  -- NOTE: Plugins can specify dependencies.
+  --
+  -- The dependencies are proper plugin specifications as well - anything
+  -- you do for a plugin at the top level, you can do for a dependency.
+  --
+  -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
-    -- Highlight todo, notes, etc in comments
+  -- Highlight todo, notes, etc in comments
 
-    -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
-    -- init.lua. If you want these files, they are in the repository, so you can just download them and
-    -- place them in the correct locations.
+  -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
+  -- init.lua. If you want these files, they are in the repository, so you can just download them and
+  -- place them in the correct locations.
 
-    -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
-    --
-    --  Here are some example plugins that I've included in the Kickstart repository.
-    --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-    --
-    -- require 'kickstart.plugins.indent_line',
-    -- require 'kickstart.plugins.lint',
-    -- require 'kickstart.plugins.autopairs',
-    -- require 'kickstart.plugins.neo-tree',
-    -- require 'kickstart.plugins.debug',
-    -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
+  --
+  --  Here are some example plugins that I've included in the Kickstart repository.
+  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
+  --
+  -- require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.autopairs',
+  -- require 'kickstart.plugins.neo-tree',
+  -- require 'kickstart.plugins.debug',
+  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
-    -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-    --    This is the easiest way to modularize your config.
-    --
-    --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  }, {
-    ui = {
-      -- If you are using a Nerd Font: set icons to an empty table which will use the
-      -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
-      icons = vim.g.have_nerd_font and {} or {
-        cmd = '⌘',
-        config = '🛠',
-        event = '📅',
-        ft = '📂',
-        init = '⚙',
-        keys = '🗝',
-        plugin = '🔌',
-        runtime = '💻',
-        require = '🌙',
-        source = '📄',
-        start = '🚀',
-        task = '📌',
-        lazy = '💤 ',
-      },
+  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
+  --    This is the easiest way to modularize your config.
+  --
+  --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
+}, {
+  ui = {
+    -- If you are using a Nerd Font: set icons to an empty table which will use the
+    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
     },
-  }
-)
+  },
+})
 
-require("obsidian").setup({
+require('obsidian').setup {
   -- point this at your vault:
-  dir = "E:\\DnD\\metrophyre",
+  dir = 'C:/projects',
 
   -- instead of timestamp‑slug, just slugify the title
   note_id_func = function(title)
-    if title and title ~= "" then
+    if title and title ~= '' then
       -- turn “My New Note!” → “my-new-note”
       return title
-        :gsub("%s+", "-")              -- spaces → dashes
-        :gsub("[^A-Za-z0-9%-]", "")    -- strip non‑alphanumerics/dashes
+        :gsub('%s+', '-') -- spaces → dashes
+        :gsub('[^A-Za-z0-9%-]', '') -- strip non‑alphanumerics/dashes
         :lower()
     else
       -- fallback if you hit <Enter> on an empty title:
@@ -449,14 +477,14 @@ require("obsidian").setup({
     -- spec.id is whatever your note_id_func returned;
     -- spec.dir is the Path object to your notes_subdir/vault
     local p = spec.dir / spec.id
-    return p:with_suffix(".md")
+    return p:with_suffix '.md'
   end,
 
   -- …all your other settings here…
-})
+}
 
 -- Add provisions to use htmldjango snippets in html files
-require'luasnip'.filetype_extend("htmldjango", {"html"})
+require('luasnip').filetype_extend('htmldjango', { 'html' })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 --
