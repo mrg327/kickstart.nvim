@@ -111,7 +111,7 @@ local hostname = gethostname()
 local config_module = hostname:gsub('[^%w_]', '_')
 
 -- Import the env config using pcall to safely handle errors
-success, ENV_PATHS = pcall(require, config_module)
+SUCCESS, ENV_PATHS = pcall(require, config_module)
 
 -- set the default shell to powershell
 if ENV_PATHS['shell'] then
