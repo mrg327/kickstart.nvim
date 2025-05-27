@@ -161,15 +161,76 @@ return {
       --     },
       --   },
       -- },
+      -- Primary Python LSP - Pylsp with optimized settings
+      pylsp = {
+        settings = {
+          pylsp = {
+            -- Disable overlapping features that Ruff handles better
+            configurationSources = {"flake8"},
+            plugins = {
+              -- Disable built-in linting (Ruff handles this)
+              pycodestyle = { enabled = false },
+              mccabe = { enabled = false },
+              pyflakes = { enabled = false },
+              flake8 = { enabled = false },
+              
+              -- Keep useful features
+              pylsp_mypy = { 
+                enabled = true,
+                live_mode = false, -- Only check on save for speed
+                strict = false,
+              },
+              rope_completion = { enabled = true },
+              rope_autoimport = { 
+                enabled = true,
+                memory = true, -- Cache imports for speed
+              },
+              jedi_completion = {
+                enabled = true,
+                include_params = true,
+                include_class_objects = true,
+                fuzzy = true,
+              },
+              jedi_hover = { enabled = true },
+              jedi_references = { enabled = true },
+              jedi_signature_help = { enabled = true },
+              jedi_symbols = { 
+                enabled = true,
+                all_scopes = true,
+              },
+            },
+          },
+        },
+      },
+      
+      -- Ruff for ultra-fast linting and formatting
       ruff = {
-        on_attach = function(client, _)
-          -- Disable hover, go-to definition, and autocomplete for ruff
-          -- client.server_capabilities.hoverProvider = false
-          -- client.server_capabilities.definitionProvider = false
-          -- client.server_capabilities.completionProvider = false
+        init_options = {
+          settings = {
+            -- Use ruff for import organization and fast linting
+            organizeImports = true,
+            fixAll = true,
+          },
+        },
+        on_attach = function(client, bufnr)
+          -- Disable hover for Ruff (let pylsp handle it)
+          client.server_capabilities.hoverProvider = false
+          
+          -- Auto-fix on save
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            group = vim.api.nvim_create_augroup("RuffFormat", { clear = true }),
+            callback = function()
+              vim.lsp.buf.code_action({
+                filter = function(action)
+                  return action.title:match("Ruff") and (action.title:match("Fix") or action.title:match("Organize"))
+                end,
+                apply = true,
+              })
+            end,
+          })
         end,
       },
-      pylsp = {},
       -- pyright = {
       --   cmd = { ENV_PATHS['pyright'], '--stdio' },
       --   settings = {
