@@ -91,10 +91,14 @@ I offer only what I have to contribute to what you have started.
 --]]
 --
 
-local function gethostname()
+function GETHOSTNAME()
   -- try using environment variables first (works on windows and some unix systems)
   local hostname = os.getenv 'COMPUTERNAME' or os.getenv 'HOSTNAME'
 
+  if hostname and hostname ~= '' then
+    return hostname
+  end
+  hostname = io.popen("hostname"):read("*l")
   if hostname and hostname ~= '' then
     return hostname
   end
@@ -104,7 +108,7 @@ end
 -- import the env config
 -- this contains computer-specific config dirs and
 -- should be changed for each machine
-local hostname = gethostname()
+local hostname = GETHOSTNAME()
 
 -- Create a valid module name from the hostname
 -- Replace any invalid characters with underscores
@@ -362,7 +366,6 @@ require('lazy').setup({
   { import = 'custom.plugins.colorscheme' },
   { import = 'custom.plugins.debug' },
   { import = 'custom.plugins.gitsigns' },
-  { import = 'custom.plugins.hardtime' },
   { import = 'custom.plugins.lazydev' },
   { import = 'custom.plugins.llm' },
   { import = 'custom.plugins.lsp' },
@@ -442,35 +445,36 @@ require('lazy').setup({
   },
 })
 
-require('obsidian').setup {
-  -- point this at your vault:
-  dir = 'C:/projects',
+if ENV_PATHS["obsidian_loc"] then
+    require('obsidian').setup {
+    -- point this at your vault:
+    dir = ENV_PATHS["obsidian_loc"],
 
-  -- instead of timestamp‑slug, just slugify the title
-  note_id_func = function(title)
-    if title and title ~= '' then
-      -- turn “My New Note!” → “my-new-note”
-      return title
-        :gsub('%s+', '-') -- spaces → dashes
-        :gsub('[^A-Za-z0-9%-]', '') -- strip non‑alphanumerics/dashes
-        :lower()
-    else
-      -- fallback if you hit <Enter> on an empty title:
-      return tostring(os.time())
-    end
-  end,
+    -- instead of timestamp‑slug, just slugify the title
+    note_id_func = function(title)
+      if title and title ~= '' then
+        -- turn “My New Note!” → “my-new-note”
+        return title
+          :gsub('%s+', '-') -- spaces → dashes
+          :gsub('[^A-Za-z0-9%-]', '') -- strip non‑alphanumerics/dashes
+          :lower()
+      else
+        -- fallback if you hit <Enter> on an empty title:
+        return tostring(os.time())
+      end
+    end,
 
-  -- ensure the file name uses your ID (i.e. your slug)
-  note_path_func = function(spec)
-    -- spec.id is whatever your note_id_func returned;
-    -- spec.dir is the Path object to your notes_subdir/vault
-    local p = spec.dir / spec.id
-    return p:with_suffix '.md'
-  end,
+    -- ensure the file name uses your ID (i.e. your slug)
+    note_path_func = function(spec)
+      -- spec.id is whatever your note_id_func returned;
+      -- spec.dir is the Path object to your notes_subdir/vault
+      local p = spec.dir / spec.id
+      return p:with_suffix '.md'
+    end,
 
-  -- …all your other settings here…
-}
-
+    -- …all your other settings here…
+  }
+end
 -- Add provisions to use htmldjango snippets in html files
 require('luasnip').filetype_extend('htmldjango', { 'html' })
 -- The line beneath this is called `modeline`. See `:help modeline`
