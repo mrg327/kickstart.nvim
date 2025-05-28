@@ -155,53 +155,64 @@ return {
     local servers = {
       -- clangd = {},
       -- gopls = {},
-      -- pyright = {
-      --   settings = {
-      --     python = {
-      --     },
-      --   },
-      -- },
-      -- Primary Python LSP - Pylsp with optimized settings
-      pylsp = {
+      pyright = {
         settings = {
-          pylsp = {
-            -- Disable overlapping features that Ruff handles better
-            configurationSources = {"flake8"},
-            plugins = {
-              -- Disable built-in linting (Ruff handles this)
-              pycodestyle = { enabled = false },
-              mccabe = { enabled = false },
-              pyflakes = { enabled = false },
-              flake8 = { enabled = false },
-              
-              -- Keep useful features
-              pylsp_mypy = { 
-                enabled = true,
-                live_mode = false, -- Only check on save for speed
-                strict = false,
-              },
-              rope_completion = { enabled = true },
-              rope_autoimport = { 
-                enabled = true,
-                memory = true, -- Cache imports for speed
-              },
-              jedi_completion = {
-                enabled = true,
-                include_params = true,
-                include_class_objects = true,
-                fuzzy = true,
-              },
-              jedi_hover = { enabled = true },
-              jedi_references = { enabled = true },
-              jedi_signature_help = { enabled = true },
-              jedi_symbols = { 
-                enabled = true,
-                all_scopes = true,
-              },
+          pyright = {
+            -- Let Ruff handle imports and formatting
+            disableOrganizeImports = true,
+          },
+          python = {
+            analysis = {
+              -- Use Ruff for linting, Pyright for type checking
+              typeCheckingMode = "basic",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
             },
           },
         },
       },
+      -- Primary Python LSP - Pylsp with optimized settings
+      -- pylsp = {
+      --   timeout_ms = 10000,
+      --   settings = {
+      --     pylsp = {
+      --       -- Disable overlapping features that Ruff handles better
+      --       configurationSources = {"flake8"},
+      --       plugins = {
+      --         -- Disable built-in linting (Ruff handles this)
+      --         pycodestyle = { enabled = false },
+      --         mccabe = { enabled = false },
+      --         pyflakes = { enabled = false },
+      --         flake8 = { enabled = false },
+      --
+      --         -- Keep useful features
+      --         pylsp_mypy = { 
+      --           enabled = true,
+      --           live_mode = false, -- Only check on save for speed
+      --           strict = false,
+      --         },
+      --         rope_completion = { enabled = true },
+      --         rope_autoimport = { 
+      --           enabled = true,
+      --           memory = true, -- Cache imports for speed
+      --         },
+      --         jedi_completion = {
+      --           enabled = true,
+      --           include_params = true,
+      --           include_class_objects = true,
+      --           fuzzy = true,
+      --         },
+      --         jedi_hover = { enabled = true },
+      --         jedi_references = { enabled = true },
+      --         jedi_signature_help = { enabled = true },
+      --         jedi_symbols = { 
+      --           enabled = true,
+      --           all_scopes = true,
+      --         },
+      --       },
+      --     },
+      --   },
+      -- },
       
       -- Ruff for ultra-fast linting and formatting
       ruff = {
