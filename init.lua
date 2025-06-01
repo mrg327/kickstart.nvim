@@ -361,7 +361,6 @@ require('lazy').setup({
   -- Comment or uncomment to enable or disable the plugins
   --
   { import = 'custom.plugins.autocomplete' },
-  { import = 'custom.plugins.markdown-preview' },
   { import = 'custom.plugins.autoformat' },
   { import = 'custom.plugins.colorscheme' },
   { import = 'custom.plugins.debug' },
@@ -370,15 +369,16 @@ require('lazy').setup({
   { import = 'custom.plugins.llm' },
   { import = 'custom.plugins.lsp' },
   { import = 'custom.plugins.luvit' },
+  { import = 'custom.plugins.markdown-preview' },
   { import = 'custom.plugins.mini' },
   { import = 'custom.plugins.obsidian' },
+  { import = 'custom.plugins.rustacean' },
   { import = 'custom.plugins.snacks' },
   { import = 'custom.plugins.todo' },
-  { import = 'custom.plugins.undotree' },
   { import = 'custom.plugins.treesitter' },
+  { import = 'custom.plugins.undotree' },
   { import = 'custom.plugins.vimtex' },
   { import = 'custom.plugins.whichkey' },
-
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
