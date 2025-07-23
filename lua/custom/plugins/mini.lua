@@ -24,6 +24,30 @@ return { -- Collection of various small independent plugins/modules
         -- Add mini files for easy file browsing and creation
         require('mini.files').setup()
         vim.keymap.set('n', '<leader>of', function() MiniFiles.open() end, {desc = 'Open [O]pen [F]ile Browser'})
+        local set_cwd = function()
+          local fs_entry = MiniFiles.get_fs_entry()
+          if fs_entry == nil then 
+            return vim.notify('Cursor is not on valid entry') 
+          end
+
+          local target_dir
+          if fs_entry.fs_type == 'directory' then
+            target_dir = fs_entry.path
+          else
+            target_dir = vim.fs.dirname(fs_entry.path)
+          end
+
+          vim.fn.chdir(target_dir)
+          vim.notify('Changed directory to: ' .. target_dir)
+        end
+
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesBufferCreate',
+      callback = function(args)
+        local buf_id = args.data.buf_id
+        vim.keymap.set('n', 'cd', set_cwd, { buffer = buf_id, desc = 'Change directory' })
+      end,
+    })
 
         -- require('mini.operators').setup()
         -- Simple and easy statusline.
