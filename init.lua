@@ -369,7 +369,7 @@ require('lazy').setup({
   { import = 'custom.plugins.llm' },
   { import = 'custom.plugins.lsp' },
   { import = 'custom.plugins.luvit' },
-  { import = 'custom.plugins.markdown-preview' },
+  { import = 'custom.plugins.markdown-render' },
   { import = 'custom.plugins.mini' },
   { import = 'custom.plugins.obsidian' },
   { import = 'custom.plugins.rustacean' },
