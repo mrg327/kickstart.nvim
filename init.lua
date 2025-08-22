@@ -376,6 +376,7 @@ require('lazy').setup({
   { import = 'custom.plugins.snacks' },
   { import = 'custom.plugins.todo' },
   { import = 'custom.plugins.treesitter' },
+  { import = 'custom.plugins.typr' },
   { import = 'custom.plugins.undotree' },
   { import = 'custom.plugins.vimtex' },
   { import = 'custom.plugins.whichkey' },
