@@ -375,6 +375,7 @@ require('lazy').setup({
   { import = 'custom.plugins.obsidian' },
   { import = 'custom.plugins.rustacean' },
   { import = 'custom.plugins.snacks' },
+  { import = 'custom.plugins.present' },
   { import = 'custom.plugins.todo' },
   { import = 'custom.plugins.treesitter' },
   { import = 'custom.plugins.typr' },
