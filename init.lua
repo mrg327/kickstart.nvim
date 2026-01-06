@@ -257,6 +257,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Auto-save markdown files after 250 ms of inactivity
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  callback = function()
+    if vim.bo.modified then
+      vim.cmd("silent! write")
+    end
+  end,
+  desc = "Auto-save after 250 ms inactivity",
+})
+
 -- Quality of life improvements (Added by Matthew)
 -- NOTE: Auto commands to make/save views and restore cursor postion after save
 
