@@ -131,6 +131,30 @@ return {
         Snacks.toggle.inlay_hints():map("<leader>uh")
         Snacks.toggle.indent():map("<leader>ug")
         Snacks.toggle.dim():map("<leader>uD")
+        -- Supermaven toggle (only if plugin is present)
+        local ok, supermaven_api = pcall(require, "supermaven-nvim.api")
+        if ok then
+          Snacks.toggle({
+            name = "Supermaven",
+            get = function()
+              return supermaven_api.is_running()
+            end,
+            set = function(state)
+              if state then
+                supermaven_api.start()
+              else
+                supermaven_api.stop()
+              end
+            end,
+          }):map("<leader>ua")
+
+          -- Default to off - use vim.schedule to run after supermaven's autocmd starts it
+          vim.schedule(function()
+            if supermaven_api.is_running() then
+              supermaven_api.stop()
+            end
+          end)
+        end
       end,
     })
   end,
