@@ -375,6 +375,7 @@ require('lazy').setup({
   { import = 'custom.plugins.autoformat' },
   { import = 'custom.plugins.colorscheme' },
   { import = 'custom.plugins.debug' },
+  { import = 'custom.plugins.devdocs' },
   { import = 'custom.plugins.gitsigns' },
   { import = 'custom.plugins.lazydev' },
   { import = 'custom.plugins.llm' },
