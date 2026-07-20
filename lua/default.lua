@@ -7,11 +7,9 @@ git update-index --no-assume-unchanged lua/dir_import.lua
 --]]
 
 local configs = {
-  pyright = nil,
   python = nil,
   shell = nil,
   llm_addr = nil,
-  undotree = nil,
 }
 
 return configs

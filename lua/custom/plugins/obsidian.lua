@@ -1,3 +1,28 @@
+local function options()
+  local vault = require('custom.environment').get().obsidian_loc
+  if not vault then
+    return nil
+  end
+
+  local opts = {
+    note_id_func = function(title)
+      if title and title ~= '' then
+        return title:gsub('%s+', '-'):gsub('[^A-Za-z0-9%-]', ''):lower()
+      end
+      return tostring(os.time())
+    end,
+    note_path_func = function(spec)
+      return (spec.dir / spec.id):with_suffix '.md'
+    end,
+    wiki_link_func = 'use_alias_only',
+  }
+
+  opts.workspaces = {
+    { name = 'default', path = vault },
+  }
+  return opts
+end
+
 return {
   'epwalsh/obsidian.nvim',
   version = '*',
@@ -40,13 +65,6 @@ return {
       desc = 'O[B]sidian [f]ollow link',
     },
     {
-      '<leader>br',
-      function()
-        vim.cmd 'ObsidianFollowLink'
-      end,
-      desc = 'O[B]sidian [f]ollow link',
-    },
-    {
       '<leader>bs',
       function()
         vim.cmd 'ObsidianBacklinks'
@@ -54,14 +72,5 @@ return {
       desc = 'O[B]sidian [S]earch Links',
     },
   },
-  opts = {
-    workspaces = {
-      {
-        name = 'metrophyre',
-        path = 'E:\\DnD\\metrophyre',
-      },
-    },
-  },
-  -- Use only the alias (i.e. the note’s title) for wiki links:
-  wiki_link_func = 'use_alias_only',
+  opts = options,
 }

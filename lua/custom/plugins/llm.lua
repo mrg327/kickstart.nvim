@@ -30,7 +30,7 @@ return {
   ---@type Ollama.Config
   opts = {
     -- your configuration overrides
-    url = ENV_PATHS['llm_addr'],
+    url = require('custom.environment').get().llm_addr,
     model = 'llama3',
     prompts = {
 

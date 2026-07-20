@@ -7,12 +7,9 @@ git update-index --no-assume-unchanged lua/dir_import.lua
 --]]
 
 local configs = {
-  pyright = "/usr/local/bin/pyright",
   python = nil,
   shell = nil,
   llm_addr = 'ppe-tlab216:11434',
-  undotree = nil,
 }
 
 return configs
-
