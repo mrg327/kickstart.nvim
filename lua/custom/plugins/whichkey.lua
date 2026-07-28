@@ -1,12 +1,9 @@
-return { -- Useful plugin to show you pending keybinds.
-  'folke/which-key.nvim',
-  event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-  opts = {
+local M = {}
+
+function M.setup()
+  require('which-key').setup {
     icons = {
-      -- set icon mappings to true if you have a Nerd Font
       mappings = vim.g.have_nerd_font,
-      -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
-      -- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
       keys = vim.g.have_nerd_font and {} or {
         Up = '<Up> ',
         Down = '<Down> ',
@@ -32,28 +29,24 @@ return { -- Useful plugin to show you pending keybinds.
         F6 = '<F6>',
         F7 = '<F7>',
         F8 = '<F8>',
-        F9 = '<F9>',
-        F10 = '<F10>',
-        F11 = '<F11>',
-        F12 = '<F12>',
       },
     },
-
-    -- Document existing key chains
     spec = {
       { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
       { '<leader>d', group = '[D]ebug' },
-      { '<leader>p', group = '[L]SP' },
+      { '<leader>p', group = 'LS[P]' },
       { '<leader>r', group = '[R]ename' },
       { '<leader>g', group = '[G]it' },
       { '<leader>o', group = '[O]pen' },
-      { '<leader>b', group = 'O[B]sidian' },
       { '<leader>q', group = '[Q]uickfix' },
       { '<leader>u', group = 'Config[u]re Options' },
+      { '<leader>uf', group = '[F]olds' },
       { '<leader>s', group = '[S]earch' },
       { '<leader>w', group = '[W]orkspace' },
-      { '<leader>t', group = '[T]oggle' },
+      { '<leader>t', group = '[T]est' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
     },
-  },
-}
+  }
+end
+
+return M

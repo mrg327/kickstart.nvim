@@ -29,7 +29,7 @@ ls.add_snippets('lua', {
   end
 
   function love.keypressed(key)
-          Gamestate.keypressed(key, code)
+          Gamestate.keypressed(key)
   end
 
   function love.draw()
