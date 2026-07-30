@@ -89,7 +89,7 @@ function M.setup()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   vim.lsp.config('*', { capabilities = capabilities })
 
-  local venv = require 'custom.venv'
+  local venv = require 'config.venv'
 
   local python_root_markers = {
     'pyrightconfig.json',

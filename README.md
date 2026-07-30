@@ -16,7 +16,7 @@ ast-grep, Lua Language Server, and Stylua.
 
 ## Package management
 
-The first startup installs the packages declared in `lua/custom/packages.lua`.
+The first startup installs the packages declared in `lua/plugins/init.lua`.
 Update them from Neovim with:
 
 ```lua
@@ -26,8 +26,9 @@ Update them from Neovim with:
 Review the generated update buffer, write it to confirm the update, and commit
 the resulting `nvim-pack-lock.json`.
 
-## Host-specific settings
+## Configuration layout
 
-`lua/custom/environment.lua` resolves a file named after the host, falling back
-to `lua/default.lua`. Host files may set `python`, `shell`, `llm_addr`, and
-`obsidian_loc`. Keep machine-specific paths out of shared plugin modules.
+Editor-wide options, mappings, autocommands, and virtual-environment discovery
+live in `lua/config/`. Plugin declarations and setup modules live in
+`lua/plugins/`, with LuaSnip definitions in `lua/plugins/snippets/`. Keep
+machine-specific paths out of this shared configuration.

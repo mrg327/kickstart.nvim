@@ -2,16 +2,16 @@ local M = {}
 
 function M.setup()
   -- Require custom snippets (expanded via LuaSnip by typing the trigger + <Tab>).
-  require 'custom.snippets.lua'
-  require 'custom.snippets.python'
-  require 'custom.snippets.cucumber'
+  require 'plugins.snippets.lua'
+  require 'plugins.snippets.python'
+  require 'plugins.snippets.cucumber'
 
   local luasnip = require 'luasnip'
   luasnip.config.setup {}
   require('luasnip.loaders.from_vscode').lazy_load()
 
   -- Native (built-in) insert-mode autocompletion is driven per-buffer by the
-  -- LSP via vim.lsp.completion.enable (see custom.plugins.lsp), which triggers
+  -- LSP via vim.lsp.completion.enable (see plugins.lsp), which triggers
   -- the popup as you type. "noinsert" pre-highlights the best match (without
   -- inserting) so a single <Tab> accepts it; snippet expansion/auto-imports
   -- apply on that <C-y>.

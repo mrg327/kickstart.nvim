@@ -25,7 +25,7 @@ function M.setup()
     neotest.run.run(vim.fn.expand '%')
   end, '[T]est [F]ile')
   map('<leader>ts', function()
-    neotest.run.run(require('custom.venv').root() or vim.fn.getcwd())
+    neotest.run.run(require('config.venv').root() or vim.fn.getcwd())
   end, '[T]est [S]uite')
   map('<leader>td', function()
     neotest.run.run { strategy = 'dap' }

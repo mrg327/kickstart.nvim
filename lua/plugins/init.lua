@@ -80,6 +80,7 @@ local modules = {
   'markdown-render',
   'neotest',
   'treesitter',
+  'fun',
 }
 
 function M.setup()
@@ -95,7 +96,7 @@ function M.setup()
   end
 
   for _, module in ipairs(modules) do
-    require('custom.plugins.' .. module).setup()
+    require('plugins.' .. module).setup()
   end
 end
 

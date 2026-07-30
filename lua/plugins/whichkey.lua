@@ -45,6 +45,7 @@ function M.setup()
       { '<leader>w', group = '[W]orkspace' },
       { '<leader>t', group = '[T]est' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      { '<leader>F', group = '[F]un' },
     },
   }
 end
