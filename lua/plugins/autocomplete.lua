@@ -5,6 +5,7 @@ function M.setup()
   require 'plugins.snippets.lua'
   require 'plugins.snippets.python'
   require 'plugins.snippets.cucumber'
+  require 'plugins.snippets.cpp'
 
   local luasnip = require 'luasnip'
   luasnip.config.setup {}

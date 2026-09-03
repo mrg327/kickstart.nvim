@@ -32,6 +32,7 @@ function M.setup()
       },
     },
     spec = {
+      { '<leader>b', group = '[B]uild' },
       { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
       { '<leader>d', group = '[D]ebug' },
       { '<leader>p', group = 'LS[P]' },

@@ -27,6 +27,37 @@ function M.setup()
   vim.keymap.set('n', '<leader>dm', function()
     dap_python.test_class()
   end, { desc = '[D]ebug test class ([M]ethod group)' })
+
+  -- C++ Debug Adapter (codelldb)
+  dap.adapters.codelldb = {
+    type = 'executable',
+    command = vim.fn.exepath 'codelldb',
+    args = { '--port', '0' },
+  }
+
+  dap.configurations.cpp = {
+    {
+      name = 'Build & Debug',
+      type = 'codelldb',
+      request = 'launch',
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/build/', 'file')
+      end,
+      cwd = '${workspaceFolder}',
+      stopAtFirstLine = true,
+      simulateInput = false,
+      showDebugOutput = true,
+    },
+  }
+
+  dap.configurations.c = dap.configurations.cpp
+
+  vim.keymap.set('n', '<leader>dB', function()
+    require('dap').run_last()
+  end, { desc = '[D]ebug C++ program (build & launch)' })
+  vim.keymap.set('n', '<leader>dr', function()
+    dap.run({ startPause = false })
+  end, { desc = '[D]ebug: [R]un without debugging' })
 end
 
 return M

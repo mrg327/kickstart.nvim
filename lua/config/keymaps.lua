@@ -36,6 +36,42 @@ function M.setup()
   vim.keymap.set('n', '<M-v>', '<C-w>v', { desc = '[V]ertically split the current buffer' })
   vim.keymap.set('n', '<M-o>', '<C-w>o', { desc = 'Show [O]nly the active buffer' })
   vim.keymap.set('n', '<M-=>', '<C-w>=', { desc = 'Set buffers to equal size' })
+
+  -- C/C++ build and run keybindings
+  vim.keymap.set('n', '<leader>br', function()
+    local ext = vim.fn.expand '%:e'
+    local compiler, std, outname
+    if ext == 'cpp' then
+      compiler = 'g++'
+      std = '-std=c++17'
+      outname = vim.fn.expand '%:p:r'
+    else
+      compiler = 'gcc'
+      std = '-std=c17'
+      outname = vim.fn.expand '%:p:r'
+    end
+    local cmd = compiler .. ' ' .. std .. ' ' .. vim.fn.expand '%:p' .. ' -o ' .. outname
+    vim.cmd.vsplit()
+    vim.api.nvim_put({ cmd .. ' && echo "\n--- Output ---" && ' .. outname }, '', false, false)
+    vim.cmd.term()
+  end, { desc = '[B]uild and [R]un current C/C++ file' })
+
+  vim.keymap.set('n', '<leader>bq', function()
+    local ext = vim.fn.expand '%:e'
+    local cmd
+    if ext == 'cpp' then
+      cmd = 'g++ -std=c++17 -Wall -Wextra -o /dev/null ' .. vim.fn.expand '%:p' .. ' 2>&1 | head -20'
+    else
+      cmd = 'gcc -std=c17 -Wall -Wextra -o /dev/null ' .. vim.fn.expand '%:p' .. ' 2>&1 | head -20'
+    end
+    local out = vim.fn.system(cmd)
+    if out ~= '' then
+      vim.cmd.copen()
+      vim.fn.setqflist({}, 'x', { lines = vim.split(out, '\n') })
+    else
+      vim.notify('Compilation succeeded', vim.log.levels.INFO)
+    end
+  end, { desc = '[B]uild quick (errors in [Q]uickfix)' })
 end
 
 return M

@@ -63,6 +63,7 @@ local packages = {
     version = 'main',
   },
   github 'folke/which-key.nvim',
+  github 'Civitasv/cmake-tools.nvim',
 }
 
 local modules = {
@@ -80,6 +81,7 @@ local modules = {
   'markdown-render',
   'neotest',
   'treesitter',
+  'cmaketools',
   'fun',
 }
 
