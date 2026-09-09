@@ -182,7 +182,7 @@ function M.setup()
       },
     },
     clangd = {
-      cmd = { 'clangd' },
+      cmd = { 'clangd', '--query-driver=/usr/bin/arm-none-eabi-*' },
       filetypes = { 'c', 'cpp', 'cxx', 'cc', 'cppm', 'ixx', 'ipp', 'tpp', 'jav' },
       root_markers = { '.git', 'compile_commands.json', 'CMakeLists.txt', 'build' },
       settings = {

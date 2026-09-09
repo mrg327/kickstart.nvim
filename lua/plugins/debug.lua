@@ -35,22 +35,39 @@ function M.setup()
     args = { '--port', '0' },
   }
 
-  -- OpenOCD adapter for STM32 via ST-LINK/V2.1 (Nucleo boards)
+  -- STM32 debugging (Nucleo boards, on-board ST-LINK)
   --
-  -- Launches OpenOCD on port 3333, then connects codelldb to it.
+  -- OpenOCD bridges the ST-LINK to a GDB server on localhost:3333, and
+  -- gdb-multiarch's built-in DAP mode bridges that server to nvim-dap.
+  -- Start OpenOCD with <leader>ds, then pick the attach configuration.
   -- Configurable via:
-  --   STM32_DEVICE   – e.g. STM32F446RE, STM32H743VI (default: STM32F446RE)
-  local openocd_device = vim.fn.getenv 'STM32_DEVICE' or 'stm32f4x'
-
-  dap.adapters.openocd = {
-    type = 'executable',
-    command = vim.fn.exepath 'openocd' or 'openocd',
-    args = {
-      '-s', '/usr/share/openocd/scripts',
-      '-f', 'interface/stlink.cfg',
-      '-f', ('target/%s.cfg'):format(openocd_device),
-    },
+  --   STM32_DEVICE   – OpenOCD target family file, e.g. stm32f4x (default), stm32h7x
+  local openocd_device = os.getenv 'STM32_DEVICE' or 'stm32f4x'
+  local openocd_cmd = {
+    'openocd',
+    '-s',
+    '/usr/share/openocd/scripts',
+    '-f',
+    'interface/stlink.cfg',
+    '-f',
+    ('target/%s.cfg'):format(openocd_device),
   }
+
+  dap.adapters.gdb = {
+    type = 'executable',
+    command = 'gdb-multiarch',
+    args = { '--interpreter=dap', '--eval-command', 'set print pretty on' },
+  }
+
+  vim.keymap.set('n', '<leader>ds', function()
+    vim.cmd 'botright 12split'
+    if vim.fn.has 'nvim-0.11' == 1 then
+      vim.fn.jobstart(openocd_cmd, { term = true })
+    else
+      vim.fn.termopen(openocd_cmd)
+    end
+    vim.cmd 'wincmd p'
+  end, { desc = '[D]ebug: start OpenOCD [S]erver' })
 
   dap.configurations.cpp = {
     {
@@ -66,15 +83,14 @@ function M.setup()
       showDebugOutput = true,
     },
     {
-      name = 'Debug STM32 (OpenOCD + ST-LINK)',
-      type = 'openocd',
-      request = 'launch',
+      name = 'Debug STM32 (attach to OpenOCD :3333)',
+      type = 'gdb',
+      request = 'attach',
       program = function()
         return vim.fn.input('Path to firmware ELF: ', vim.fn.getcwd() .. '/build/firmware.elf', 'file')
       end,
+      target = 'localhost:3333',
       cwd = '${workspaceFolder}',
-      stopAtFirstLine = false,
-      showDebugOutput = true,
     },
   }
 
@@ -137,10 +153,10 @@ function M.setup()
   end, { desc = '[B]uild, [F]lash & [D]ebug STM32' })
 
   -- Just build (incremental)
-  vim.keymap.set('n', '<leader>br', function()
+  vim.keymap.set('n', '<leader>bm', function()
     vim.notify('Building...', vim.log.levels.INFO)
     os.execute(make_bin .. ' -C ' .. vim.fn.getcwd())
-  end, { desc = '[B]uild STM32 firmware' })
+  end, { desc = '[B]uild STM32 firmware with [M]ake' })
 
   -- Flash only (no rebuild)
   vim.keymap.set('n', '<leader>bl', function()
