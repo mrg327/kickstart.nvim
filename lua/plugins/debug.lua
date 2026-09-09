@@ -127,7 +127,7 @@ function M.setup()
     if flash_path == '' then return false end
 
     vim.notify('Flashing ' .. flash_path .. ' to STM32 via ST-LINK...', vim.log.levels.INFO)
-    local cmd = ('st-flash write %%s 0x08000000'):format(flash_path)
+    local cmd = ('st-flash --reset write %s 0x08000000'):format(flash_path)
     local ok, code = os.execute(cmd)
     return ok and code == 0
   end
