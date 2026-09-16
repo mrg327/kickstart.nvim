@@ -98,64 +98,105 @@ function M.setup()
 
   -- ============================================================
   -- STM32 Build & Flash Pipeline (mirrors CubeIDE workflow)
+  --
+  -- Commands run through vim.system, so their output never touches the
+  -- terminal under nvim. Failures land in quickfix; success is a notify.
+  -- Everything is asynchronous, so the ~20 s first HAL build does not
+  -- freeze the editor. Steps chain through callbacks, not return values.
   -- ============================================================
-  local make_bin = vim.fn.exepath 'make' or 'make'
-
-  local function stm32_build()
-    vim.notify('Building STM32 firmware...', vim.log.levels.INFO)
-    local ok, code = os.execute(make_bin .. ' -C ' .. vim.fn.getcwd())
-    return ok and code == 0
+  local make_bin = vim.fn.exepath 'make'
+  if make_bin == '' then
+    make_bin = 'make'
   end
 
-  local function stm32_flash(ext)
+  --- Run cmd in the current directory; call on_done(ok) when it exits.
+  local function run(cmd, on_done)
+    vim.system(cmd, { cwd = vim.fn.getcwd(), text = true }, function(r)
+      vim.schedule(function()
+        local out = vim.trim((r.stdout or '') .. (r.stderr or ''))
+        if r.code ~= 0 then
+          vim.fn.setqflist({}, ' ', {
+            title = table.concat(cmd, ' '),
+            lines = vim.split(out, '\n'),
+            efm = '%f:%l:%c: %t%*[^:]: %m,%f:%l: %t%*[^:]: %m,%-G%.%#',
+          })
+          vim.cmd.copen()
+          vim.notify(cmd[1] .. ' failed (exit ' .. r.code .. ')', vim.log.levels.ERROR)
+        else
+          -- Success: show only the tail (size report for make, verify line
+          -- for st-flash), not every compiler command line.
+          local lines = vim.split(out, '\n')
+          local tail = table.concat(vim.list_slice(lines, math.max(1, #lines - 2)), '\n')
+          vim.notify(tail ~= '' and tail or (cmd[1] .. ' ok'), vim.log.levels.INFO)
+        end
+        if on_done then
+          on_done(r.code == 0)
+        end
+      end)
+    end)
+  end
+
+  local function stm32_build(on_done)
+    vim.notify('Building STM32 firmware...', vim.log.levels.INFO)
+    run({ make_bin }, on_done)
+  end
+
+  local function firmware_path(ext)
     ext = ext or '.bin'
-    local paths = {
-      vim.fn.getcwd() .. '/build/firmware' .. ext,
-      vim.fn.getcwd() .. '/firmware' .. ext,
-      vim.fn.getcwd() .. '/' .. vim.fn.expand('%:t:r') .. ext,
-    }
-    local flash_path = nil
-    for _, p in ipairs(paths) do
+    local cwd = vim.fn.getcwd()
+    for _, p in ipairs {
+      cwd .. '/build/firmware' .. ext,
+      cwd .. '/firmware' .. ext,
+      cwd .. '/' .. vim.fn.expand '%:t:r' .. ext,
+    } do
       if vim.fn.filereadable(p) == 1 then
-        flash_path = p
-        break
+        return p
       end
     end
-    if not flash_path then
-      flash_path = vim.fn.input('Firmware path: ', '', 'file')
-    end
-    if flash_path == '' then return false end
+    return vim.fn.input('Firmware path: ', '', 'file')
+  end
 
-    vim.notify('Flashing ' .. flash_path .. ' to STM32 via ST-LINK...', vim.log.levels.INFO)
-    local cmd = ('st-flash --reset write %s 0x08000000'):format(flash_path)
-    local ok, code = os.execute(cmd)
-    return ok and code == 0
+  local function stm32_flash(on_done)
+    local path = firmware_path()
+    if path == '' then
+      if on_done then
+        on_done(false)
+      end
+      return
+    end
+    vim.notify('Flashing ' .. vim.fn.fnamemodify(path, ':.') .. ' via ST-LINK...', vim.log.levels.INFO)
+    run({ 'st-flash', '--reset', 'write', path, '0x08000000' }, on_done)
   end
 
   -- Build + Flash
   vim.keymap.set('n', '<leader>bf', function()
-    if stm32_build() then
-      if stm32_flash() then
-        vim.notify('Flash succeeded. Press <leader>dB to debug.', vim.log.levels.OK)
+    stm32_build(function(ok)
+      if ok then
+        stm32_flash(function(flashed)
+          if flashed then
+            vim.notify('Flash succeeded. <leader>dc to debug.', vim.log.levels.INFO)
+          end
+        end)
       end
-    end
+    end)
   end, { desc = '[B]uild & [F]lash STM32' })
 
   -- Build + Flash + Debug (full CubeIDE-like pipeline)
   vim.keymap.set('n', '<leader>bd', function()
-    if stm32_build() then
-      if stm32_flash() then
-        vim.schedule(function()
-          require('dap').continue()
+    stm32_build(function(ok)
+      if ok then
+        stm32_flash(function(flashed)
+          if flashed then
+            require('dap').continue()
+          end
         end)
       end
-    end
+    end)
   end, { desc = '[B]uild, [F]lash & [D]ebug STM32' })
 
   -- Just build (incremental)
   vim.keymap.set('n', '<leader>bm', function()
-    vim.notify('Building...', vim.log.levels.INFO)
-    os.execute(make_bin .. ' -C ' .. vim.fn.getcwd())
+    stm32_build()
   end, { desc = '[B]uild STM32 firmware with [M]ake' })
 
   -- Flash only (no rebuild)
