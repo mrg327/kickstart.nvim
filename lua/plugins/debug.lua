@@ -60,11 +60,17 @@ function M.setup()
   }
 
   vim.keymap.set('n', '<leader>ds', function()
+    -- A project Makefile knows its board, so prefer `make openocd` and only
+    -- fall back to the STM32_DEVICE environment variable outside a project.
+    local cmd = openocd_cmd
+    if vim.fn.filereadable 'Makefile' == 1 then
+      cmd = { vim.fn.exepath 'make' ~= '' and vim.fn.exepath 'make' or 'make', 'openocd' }
+    end
     vim.cmd 'botright 12split'
     if vim.fn.has 'nvim-0.11' == 1 then
-      vim.fn.jobstart(openocd_cmd, { term = true })
+      vim.fn.jobstart(cmd, { term = true })
     else
-      vim.fn.termopen(openocd_cmd)
+      vim.fn.termopen(cmd)
     end
     vim.cmd 'wincmd p'
   end, { desc = '[D]ebug: start OpenOCD [S]erver' })
