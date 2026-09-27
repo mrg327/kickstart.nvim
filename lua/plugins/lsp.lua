@@ -213,6 +213,7 @@ function M.setup()
       'verible',
       'codelldb',
       'stylua',
+      'tree-sitter-cli',
     },
   }
 

@@ -2,6 +2,7 @@ local M = {}
 
 function M.setup()
   require('nvim-treesitter').setup()
+  require('nvim-treesitter').install { 'systemverilog' }
   local unavailable_languages = {}
   vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('UserTreesitter', { clear = true }),
