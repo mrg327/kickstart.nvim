@@ -14,6 +14,8 @@ function M.setup()
       python = { 'ruff_fix', 'ruff_organize_imports', 'ruff_format' },
       cpp = { 'clang_format' },
       c = { 'clang_format' },
+      verilog = { 'verible' },
+      systemverilog = { 'verible' },
     },
   }
   vim.keymap.set({ 'n', 'v' }, '<leader>f', function()

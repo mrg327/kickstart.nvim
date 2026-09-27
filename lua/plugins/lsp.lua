@@ -192,6 +192,12 @@ function M.setup()
         },
       },
     },
+    verible = {
+      cmd = { 'verible-verilog-ls', '--rules_config_search' },
+      filetypes = { 'verilog', 'systemverilog' },
+      root_markers = { '.rules.verible_lint', 'verible.filelist', '.git' },
+      workspace_required = false,
+    },
   }
 
   require('fidget').setup {}
@@ -204,6 +210,7 @@ function M.setup()
       'html-lsp',
       'lua-language-server',
       'clangd',
+      'verible',
       'codelldb',
       'stylua',
     },
