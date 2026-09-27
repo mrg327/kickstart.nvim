@@ -1,5 +1,27 @@
 local M = {}
 
+-- vim.lsp.buf.rename walks every attached client that supports rename and
+-- prompts once per client. Rename with exactly one: the first that supports
+-- prepareRename, otherwise the first attached.
+local function rename()
+  local clients = vim.lsp.get_clients { bufnr = 0, method = vim.lsp.protocol.Methods.textDocument_rename }
+  table.sort(clients, function(a, b)
+    return a.id < b.id
+  end)
+  local chosen = clients[1]
+  for _, client in ipairs(clients) do
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_prepareRename) then
+      chosen = client
+      break
+    end
+  end
+  vim.lsp.buf.rename(nil, {
+    filter = function(client)
+      return chosen ~= nil and client.id == chosen.id
+    end,
+  })
+end
+
 function M.setup()
   local highlight_group = vim.api.nvim_create_augroup('custom-lsp-highlight', { clear = false })
   local detach_group = vim.api.nvim_create_augroup('custom-lsp-detach', { clear = true })
@@ -27,7 +49,8 @@ function M.setup()
         vim.keymap.set(mode or 'n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
       end
 
-      map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+      map('<leader>rn', rename, '[R]e[n]ame')
+      map('grn', rename, '[R]e[n]ame')
       map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
       map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
