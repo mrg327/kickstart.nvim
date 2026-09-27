@@ -198,6 +198,12 @@ function M.setup()
       root_markers = { '.rules.verible_lint', 'verible.filelist', '.git' },
       workspace_required = false,
     },
+    slang_server = {
+      cmd = { 'slang-server' },
+      filetypes = { 'verilog', 'systemverilog' },
+      root_markers = { '.slang', '.git' },
+      workspace_required = false,
+    },
   }
 
   require('fidget').setup {}
@@ -211,6 +217,7 @@ function M.setup()
       'lua-language-server',
       'clangd',
       'verible',
+      'slang-server',
       'codelldb',
       'stylua',
       'tree-sitter-cli',
