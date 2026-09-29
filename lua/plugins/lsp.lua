@@ -247,29 +247,6 @@ function M.setup()
     },
   }
 
-  -- Auto-detect compile_commands.json and update clangd root markers for C/C++ files
-  vim.api.nvim_create_autocmd('BufReadPost', {
-    group = vim.api.nvim_create_augroup('cpp-compile-db', { clear = true }),
-    pattern = { '*.c', '*.cpp', '*.cxx', '*.cc', '*.h', '*.hpp' },
-    callback = function(event)
-      local ft = vim.bo[event.buf].filetype
-      if not (ft == 'c' or ft == 'cpp') then
-        return
-      end
-
-      local buf_dir = vim.fn.expand('%:p:h')
-      local cmd_path = vim.fn.findfile('compile_commands.json', buf_dir .. ';')
-      if cmd_path ~= '' then
-        local clangd_client = vim.lsp.get_client { name = 'clangd', bufnr = event.buf }
-        if clangd_client then
-          local root_markers = vim.deepcopy(clangd_client.config.root_markers)
-          table.insert(root_markers, 1, 'compile_commands.json')
-          clangd_client.config.root_markers = root_markers
-        end
-      end
-    end,
-  })
-
   for name, config in pairs(servers) do
     vim.lsp.config(name, config)
     vim.lsp.enable(name)
